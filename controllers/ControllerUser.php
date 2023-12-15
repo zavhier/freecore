@@ -155,3 +155,45 @@ function updateUserFromDatabase($usuario) {
 
     return $resultset; 
 }
+
+
+function removeUserCompletelyFromDatabase($id){
+	
+    $resultset = ["estado" => "200"]; 
+
+    $db = new ConnectionDatabase();
+
+    try {
+        
+	    $db->initTransaction();
+	
+        // Eliminar de la tabla 'productos'
+        $query = "DELETE FROM productos WHERE usuario_id IN (SELECT id FROM usuarios WHERE id = ?)";
+        $db->delete($query, $id);
+
+        // Eliminar de la tabla 'razon_social'
+        $query = "DELETE FROM razon_social WHERE id IN (SELECT razon_social_id FROM usuarios_razon_social WHERE usuario_id = ?)";
+        $db->delete($query, $id);
+
+        // Eliminar de la tabla 'usuarios_razon_social'
+        $query = "DELETE FROM usuarios_razon_social WHERE usuario_id IN (SELECT id FROM usuarios WHERE id = ?)";
+        $db->delete($query, $id);
+
+        // Eliminar de la tabla 'usuarios'
+        $query = "DELETE FROM usuarios WHERE id = ?";
+        $db->delete($query, $id);
+
+        $db->getConnection()->commit();
+        $db->close();
+    } catch (PDOException $e) {
+        if ($db) {
+            $db->getConnection()->rollback();
+            $db->close();
+        }
+
+        $resultset["estado"] = "404";
+        $resultset["mensaje"] = "Error al eliminar usuario definitivamente con Id $id: " . $e->getMessage();
+    }
+	
+	return $resultset; 
+}

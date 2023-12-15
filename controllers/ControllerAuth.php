@@ -113,5 +113,20 @@ function checkAuthToken($token) {
     return 202;
 }
 
-
+function getPasswordEncrypt($password){    
+    $response = [];
+    $opciones = ['cost' => 12];
+    $passwordHash = password_hash($password, PASSWORD_BCRYPT, $opciones);  
+    if(!empty($passwordHash)){
+        $response["mensaje"]='Clave encriptada con exito.';
+        $response["password"]=$passwordHash;
+        $response["estado"]="200";    
+    }else{
+        $response["mensaje"]='Error al intentar encriptar la clave de usuario.';
+        $response["password"]="";
+        $response["estado"]="404";    
+    }
+    
+    return $response;
+}
 

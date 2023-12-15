@@ -45,8 +45,8 @@ function handleGetRequest($request,$token) {
 		if (validateAuthorization($token, $request, "produc")) {				
 			$response = getProducAllFromDatabase();
 		}		
-    }		
-	
+    }
+		
 	response::json($response,$authorization);	
 }
 
@@ -69,6 +69,16 @@ function handlePostRequest($request,$token) {
 			return response::json($response);	  
 		}
 	}	
+
+	if ($request === '/api/encryptpass') {	
+		$split = (explode("/", $request));	
+		$url = $split[2];	
+		if($url == "encryptpass"){
+			$pass = $_POST['password'];
+			$response = getPasswordEncrypt($pass);
+			return response::json($response);	  
+		}
+	}		
 
 	if ($request === '/api/user') {
 		if (validateAuthorization($token, $request, "user")) {	
@@ -156,6 +166,13 @@ function handleDeleteRequest($request,$token) {
 	if (strpos($request, '/api/produc') !== false) {						
 		if (validateAuthorization($token, $request, "produc")) {	
 			removeProducFromDatabase($id);				
+			$response["estado"] = "200";
+		}		  
+    }	
+
+	if (strpos($request, '/api/dissolveuser') !== false) {						
+		if (validateAuthorization($token, $request, "dissolveuser")) {	
+			removeUserCompletelyFromDatabase($id);				
 			$response["estado"] = "200";
 		}		  
     }	
