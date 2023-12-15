@@ -25,28 +25,38 @@ function getProducByIdFromDatabase($id){
 function saveProducFromDatabase($producto) {
 
     $resultset = [];
-
+        
     if (
         isset($producto->nombre, $producto->descripcion) &&
         !empty(trim($producto->nombre)) &&
         !empty(trim($producto->descripcion)) &&
         !empty(trim($producto->usuario_id))
-    ) {
+    ) {   
         $nombre = trim($producto->nombre);
         $descripcion = trim($producto->descripcion);
         $fecha_creacion = date('Y-m-d H:i:s');        
         $codigo_qr = !empty($producto->codigo_qr) ? $producto->codigo_qr : ''; 
+
+        $url_qr = !empty($producto->url_qr) ? $producto->url_qr : null; 
+        $serial_qr = !empty($producto->serial_qr) ? $producto->serial_qr : null; 
         $razon_social_id = !empty($producto->razon_social_id) ? $producto->razon_social_id : null; 
         $usuario_id = trim($producto->usuario_id);
+        $tipo_estado_id = !empty($producto->tipo_estado_id) ? $producto->tipo_estado_id : null;
+        $tipo_producto_id = !empty($producto->tipo_producto_id) ? $producto->tipo_producto_id : null;
+        $fecha_baja = !empty($producto->fecha_baja) ? $producto->fecha_baja : null;
+        $urlimg = !empty($producto->urlimg) ? $producto->urlimg : null;
+        $condicion = !empty($producto->condicion) ? $producto->condicion : 1;
 
-        $query = "INSERT INTO `productos`(`id`, `nombre`, `descripcion`, `fecha_creacion`, `codigo_qr`, `razon_social_id`,`usuario_id`) VALUES (null,?,?,?,?,?,?)";
+        $query = "INSERT INTO `productos`(`id`, `nombre`, `descripcion`, `fecha_creacion`, `codigo_qr`, `url_qr`, `serial_qr`, `razon_social_id`,`usuario_id`,`tipo_estado_id`,`tipo_producto_id`,`fecha_baja`,`urlimg`,`condicion`) VALUES (null,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        $bindings = [$nombre, $descripcion, $fecha_creacion, $codigo_qr,$razon_social_id,$usuario_id];
-       
+        $bindings = [$nombre, $descripcion, $fecha_creacion, $codigo_qr,$url_qr,$serial_qr,$razon_social_id,$usuario_id,
+                    $tipo_estado_id,$tipo_producto_id,$fecha_baja,$urlimg,$condicion
+        ];
+
         $db = new ConnectionDatabase();
         $db->getConnection()->autocommit(FALSE);
         try {
-            if ($db->insert($query, 'ssssdd', $bindings)) {
+            if ($db->insert($query, 'ssssssddddssd', $bindings)) {
                 $id = mysqli_insert_id($db->getConnection()); 
                 $resultset = [
                     "id" => $id,
@@ -54,8 +64,15 @@ function saveProducFromDatabase($producto) {
                     "descripcion" => $descripcion,
                     "fecha_creacion" => $fecha_creacion,
                     "codigo_qr" => $codigo_qr,
+                    "url_qr"=>$url_qr,
+                    "serial_qr"=>$serial_qr,
                     "razon_social_id" => $razon_social_id,
                     "usuario_id" => $usuario_id,
+                    "tipo_estado_id" => $tipo_estado_id,
+                    "tipo_producto_id" => $tipo_producto_id,
+                    "fecha_baja" => $fecha_baja,
+                    "urlimg" => $urlimg,
+                    "condicion" => $condicion,
                     "estado" => "200"
                 ];
                 
@@ -78,35 +95,53 @@ function saveProducFromDatabase($producto) {
 function updateProducFromDatabase($producto) {
 	
     $resultset = [];
-
+    
     if (
-        isset($producto->id,$producto->nombre, $producto->descripcion,$producto->codigo_qr,$producto->razon_social_id) &&
+        isset($producto->id,$producto->nombre, $producto->descripcion) &&
         !empty(trim($producto->id)) &&
         !empty(trim($producto->nombre)) &&
-        !empty(trim($producto->descripcion)) &&
-        !empty(trim($producto->codigo_qr)) &&
-        !empty(trim($producto->razon_social_id))
+        !empty(trim($producto->id))
     ) {
         $id = trim($producto->id);	
         $nombre = trim($producto->nombre);
         $descripcion = trim($producto->descripcion);
         $fecha_creacion = !empty($producto->fecha_creacion) ? $producto->fecha_creacion : date('Y-m-d H:i:s');      
-        $codigo_qr = !empty($producto->codigo_qr) ? $producto->codigo_qr : ''; 
-        $razon_social_id = trim($producto->razon_social_id);
+        $codigo_qr = !empty($producto->codigo_qr) ? $producto->codigo_qr : '';         
+        $url_qr = !empty($producto->url_qr) ? $producto->url_qr : null; 
+        $serial_qr = !empty($producto->serial_qr) ? $producto->serial_qr : null; 
+        $razon_social_id = !empty($producto->razon_social_id) ? $producto->razon_social_id : null; 
+        $usuario_id = trim($producto->usuario_id);
+        $tipo_estado_id = !empty($producto->tipo_estado_id) ? $producto->tipo_estado_id : null;
+        $tipo_producto_id = !empty($producto->tipo_producto_id) ? $producto->tipo_producto_id : null;
+        $fecha_baja = !empty($producto->fecha_baja) ? $producto->fecha_baja : null; 
+        $urlimg = !empty($producto->urlimg) ? $producto->urlimg : null;
+        $condicion = !empty($producto->condicion) ? $producto->condicion : 1;
+        
+        $query = "UPDATE `productos` SET `nombre`=?,`descripcion`=?,`fecha_creacion`=?,`codigo_qr`=?, `url_qr`=?, ".
+        "`serial_qr`=?, `razon_social_id`=?, `usuario_id`=?,`tipo_estado_id`=?,`tipo_producto_id`=?,`fecha_baja`=?,`urlimg`=?,`condicion`=? WHERE id=?";
 
-        $query = "UPDATE `productos` SET `nombre`=?,`descripcion`=?,`fecha_creacion`=?,`codigo_qr`=?, `razon_social_id`=? WHERE id=?";
-
-        $bindings = [$nombre, $descripcion,$fecha_creacion,$codigo_qr,$razon_social_id,$id];
-
+        $bindings = [$nombre, $descripcion, $fecha_creacion, $codigo_qr,$url_qr,$serial_qr,$razon_social_id,$usuario_id,
+                    $tipo_estado_id,$tipo_producto_id,$fecha_baja,$urlimg,$condicion, $id
+        ];
         $db = new ConnectionDatabase();
         $db->getConnection()->autocommit(FALSE);
         try {
-            if ($db->insert($query, 'ssssdd', $bindings)) {                
+            if ($db->insert($query, 'ssssssddddssdd', $bindings)) {                
                 $resultset = [
                     "id" => $id,
+                    "nombre" => $nombre,
                     "descripcion" => $descripcion,
                     "fecha_creacion" => $fecha_creacion,
                     "codigo_qr" => $codigo_qr,
+                    "url_qr"=>$url_qr,
+                    "serial_qr"=>$serial_qr,
+                    "razon_social_id" => $razon_social_id,
+                    "usuario_id" => $usuario_id,
+                    "tipo_estado_id" => $tipo_estado_id,
+                    "tipo_producto_id" => $tipo_producto_id,
+                    "fecha_baja" => $fecha_baja,
+                    "urlimg" => $urlimg,
+                    "condicion" => $condicion,
                     "estado" => "200"
                 ];
                 $db->getConnection()->commit();

@@ -4,6 +4,9 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 
+// Configuracion la zona horaria
+date_default_timezone_set('America/Argentina/Buenos_Aires');
+
 // Incluye las rutas y controladores
 require 'routes/Routes.php';
 
