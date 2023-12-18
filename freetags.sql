@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 15-12-2023 a las 17:05:53
+-- Tiempo de generación: 18-12-2023 a las 09:29:59
 -- Versión del servidor: 10.5.23-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `freetags`
 --
+CREATE DATABASE IF NOT EXISTS `freetags` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `freetags`;
 
 -- --------------------------------------------------------
 
@@ -45,6 +47,18 @@ CREATE TABLE `productos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `productos`:
+--   `razon_social_id`
+--       `razon_social` -> `id`
+--   `tipo_estado_id`
+--       `tipo_estado` -> `id`
+--   `tipo_producto_id`
+--       `tipo_producto` -> `id`
+--   `usuario_id`
+--       `usuarios` -> `id`
+--
+
+--
 -- Volcado de datos para la tabla `productos`
 --
 
@@ -52,8 +66,7 @@ INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `fecha_creacion`, `codig
 (1, 'ASUS A51', 'Celular', '2023-12-11 03:00:00', '', NULL, NULL, 1, 1, 1, 1, NULL, NULL, 1),
 (2, 'Galaxy S22', 'Celular', '2023-12-13 03:00:00', 'A123456', NULL, NULL, 2, 1, 1, 1, NULL, NULL, 1),
 (11, 'Galaxy S22 Demo', 'Tablet', '2023-12-15 03:00:00', 'B123456', NULL, NULL, 1, 1, 1, 1, NULL, NULL, 1),
-(13, 'ASUS A51 XXXXXXXXXXX', 'Celular', '2023-12-15 03:00:00', 'C123456', NULL, NULL, 1, 1, 1, 1, NULL, NULL, 1),
-(15, 'NUEVO NOTEBOOK I9', 'Computadora personal', '2023-12-15 03:00:00', 'c://', NULL, NULL, 1, 1, 2, 2, NULL, '/asset/img/', 1);
+(13, 'ASUS A51 XXXXXXXXXXX', 'Celular', '2023-12-15 03:00:00', 'C123456', NULL, NULL, 1, 1, 1, 1, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -70,6 +83,10 @@ CREATE TABLE `razon_social` (
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `urlimg` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- RELACIONES PARA LA TABLA `razon_social`:
+--
 
 --
 -- Volcado de datos para la tabla `razon_social`
@@ -93,6 +110,10 @@ CREATE TABLE `tipo_estado` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `tipo_estado`:
+--
+
+--
 -- Volcado de datos para la tabla `tipo_estado`
 --
 
@@ -111,6 +132,10 @@ CREATE TABLE `tipo_producto` (
   `id` int(11) NOT NULL,
   `descripcion` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- RELACIONES PARA LA TABLA `tipo_producto`:
+--
 
 --
 -- Volcado de datos para la tabla `tipo_producto`
@@ -141,13 +166,16 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `usuarios`:
+--
+
+--
 -- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `fecha_alta`, `estado`, `genero`, `telcel`, `telref`, `urlimg`) VALUES
 (1, 'adminó', 'admin', '$2a$12$IYNu9hUzAMzBr/aq0gzyKOOCYawyNGQPYr9zaFdkKsRoX1M8cLBM.', 'manager', '2023-12-12 02:42:15', 1, NULL, '', '', ''),
-(6, 'demo1', 'demo1@gmail.com', '$2y$12$Nizv66PxLbVsVbeY.bBzh.qVB2uQZsgz2FA4WbkcYf6BqrgcqvWPK', 'user', '2023-12-12 02:42:15', 1, 'F', '555-123456', '123-965874', ''),
-(11, 'demo2', 'demo2@gmail.com', '$2y$12$Py/Lv0oChcw5DGTrrgZQmeLaPM8R.6n9Dafxls6owQ/lYmovkUSgK', 'user', '2023-12-12 02:42:15', 1, 'F', '555-123456', '123-965874', '');
+(6, 'demo1', 'demo1@gmail.com', '$2y$12$Nizv66PxLbVsVbeY.bBzh.qVB2uQZsgz2FA4WbkcYf6BqrgcqvWPK', 'user', '2023-12-12 02:42:15', 1, 'F', '555-123456', '123-965874', '');
 
 -- --------------------------------------------------------
 
@@ -162,14 +190,21 @@ CREATE TABLE `usuarios_razon_social` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
+-- RELACIONES PARA LA TABLA `usuarios_razon_social`:
+--   `usuario_id`
+--       `usuarios` -> `id`
+--   `razon_social_id`
+--       `razon_social` -> `id`
+--
+
+--
 -- Volcado de datos para la tabla `usuarios_razon_social`
 --
 
 INSERT INTO `usuarios_razon_social` (`id`, `usuario_id`, `razon_social_id`) VALUES
 (8, 1, 1),
 (9, 1, 2),
-(10, 1, 4),
-(11, 1, 12);
+(10, 1, 4);
 
 --
 -- Índices para tablas volcadas
