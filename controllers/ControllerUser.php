@@ -1,7 +1,6 @@
 <?php
 
 require_once 'db.php';
-require_once 'response.php';
 
 function getUsersAllFromDatabase(){
 	$db = new ConnectionDatabase();

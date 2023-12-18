@@ -3,7 +3,7 @@ require 'controllers/ControllerAuth.php';
 require 'controllers/ControllerUser.php';
 require 'controllers/ControllerProduc.php';
 require 'controllers/ControllerSocialReasons.php';
-require 'controllers/ControllerQRCode.php';
+require 'controllers/ControllerSendMail.php';
 require_once 'response.php';
 
 function validateAuthorization($token, $request, $expectedUrl) {
@@ -106,6 +106,15 @@ function handlePostRequest($request,$token) {
 			return response::json($response,$authorization);	  
 		}
 	}
+
+	if ($request === '/api/sendmail') {
+		if (validateAuthorization($token, $request, "sendmail")) {	
+			$payload = file_get_contents('php://input'); 				
+			$params = json_decode($payload);
+			$response = SendMail($params);	
+			return response::json($response,$authorization);	  
+		}
+	}	
 	
 }
 
