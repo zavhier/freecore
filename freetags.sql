@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 18-12-2023 a las 09:29:59
+-- Tiempo de generación: 22-12-2023 a las 13:33:10
 -- Versión del servidor: 10.5.23-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `freetags`
 --
-CREATE DATABASE IF NOT EXISTS `freetags` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `freetags`;
 
 -- --------------------------------------------------------
 
@@ -45,18 +43,6 @@ CREATE TABLE `productos` (
   `urlimg` varchar(255) DEFAULT NULL,
   `condicion` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- RELACIONES PARA LA TABLA `productos`:
---   `razon_social_id`
---       `razon_social` -> `id`
---   `tipo_estado_id`
---       `tipo_estado` -> `id`
---   `tipo_producto_id`
---       `tipo_producto` -> `id`
---   `usuario_id`
---       `usuarios` -> `id`
---
 
 --
 -- Volcado de datos para la tabla `productos`
@@ -85,10 +71,6 @@ CREATE TABLE `razon_social` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- RELACIONES PARA LA TABLA `razon_social`:
---
-
---
 -- Volcado de datos para la tabla `razon_social`
 --
 
@@ -110,10 +92,6 @@ CREATE TABLE `tipo_estado` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- RELACIONES PARA LA TABLA `tipo_estado`:
---
-
---
 -- Volcado de datos para la tabla `tipo_estado`
 --
 
@@ -132,10 +110,6 @@ CREATE TABLE `tipo_producto` (
   `id` int(11) NOT NULL,
   `descripcion` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- RELACIONES PARA LA TABLA `tipo_producto`:
---
 
 --
 -- Volcado de datos para la tabla `tipo_producto`
@@ -166,10 +140,6 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELACIONES PARA LA TABLA `usuarios`:
---
-
---
 -- Volcado de datos para la tabla `usuarios`
 --
 
@@ -188,14 +158,6 @@ CREATE TABLE `usuarios_razon_social` (
   `usuario_id` int(11) DEFAULT NULL,
   `razon_social_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- RELACIONES PARA LA TABLA `usuarios_razon_social`:
---   `usuario_id`
---       `usuarios` -> `id`
---   `razon_social_id`
---       `razon_social` -> `id`
---
 
 --
 -- Volcado de datos para la tabla `usuarios_razon_social`

@@ -465,6 +465,39 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Envio de Mail",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n            \"nombre\": \"Laura Soledad Nuñes\",\r\n            \"correo\": \"alvarez.leandro.a@gmail.com\",\r\n            \"tipoenvio\":\"1\",\r\n            \"mensaje\": \"Otros datos que necesitemos informar\"\r\n        }"
+				},
+				"url": {
+					"raw": "https://freetags.mysite.com.ar/api/index.php/sendmail",
+					"protocol": "https",
+					"host": [
+						"freetags",
+						"mysite",
+						"com",
+						"ar"
+					],
+					"path": [
+						"api",
+						"index.php",
+						"sendmail"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -490,7 +523,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwMjcwMTQzNiwicm9sIjoibWFuYWdlciJ9.BfEPSQ14ic/AA6yN1FmGUBE8gzGg6IoL4ldPKHO0SxI=",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwMjk1MDQ1MSwicm9sIjoibWFuYWdlciJ9.hP8/lSQmMmAuAHMN+b4CMKgS9Af5xLcQBrK5Gy2ON2M=",
 			"type": "string"
 		},
 		{
