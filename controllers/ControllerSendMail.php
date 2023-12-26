@@ -17,14 +17,14 @@ function SendMail($email){
 
         $fecha = date('Y-m-d H:i:s');
 
-        $De      = config::EMAILFROM;
+        $De      =  config::getEmailFrom();
         $Para    = $email->correo; 
         $Cc      = "";
 
         if($email->tipoenvio == 1){
-            $asunto  = $fecha . " - Notificación de objeto encontrado.";
+            $asunto  = $fecha . " - " . config::getEmailSubjectFreetags();
         }else{
-            $asunto  = $fecha . " - Notificación de dispositivo encontrado.";
+            $asunto  = $fecha . " - " . config::getEmailSubjectSafeBags();
         }
         
         $mensaje = '

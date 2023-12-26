@@ -4,15 +4,10 @@ require_once 'config.php';
 
 class ConnectionDatabase {
 
-	private const host     = config::HOST;
-	private const user     = config::USERDB;  
-	private const password = config::PASSWDB;     
-	private const database = config::DATABASE; 
-
 	private $conn;
 	
     function __construct() {
-		$this->conn = mysqli_connect(self::host,self::user,self::password,self::database);
+		$this->conn = mysqli_connect(config::getHost(),config::getUserDB(),config::getPasswDB(),config::getDatabase());
         if (!$this->conn) {
             echo "Error: No se pudo conectar a MySQL." . PHP_EOL;
             echo "errno de depuración: " . mysqli_connect_errno() . PHP_EOL;
