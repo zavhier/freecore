@@ -43,22 +43,23 @@ function saveUserFromDatabase($usuario) {
         $telcel = isset($usuario->telcel) ? trim($usuario->telcel) : null;
         $telref = isset($usuario->telref) ? trim($usuario->telref) : null;
         $urlimg = isset($usuario->urlimg) ? trim($usuario->urlimg) : null;
+        $idempresa = isset($usuario->idempresa) ? trim($usuario->idempresa) : 0;
 
         // Utilizo password_hash para almacenar de forma segura las contraseñas
         $opciones = ['cost' => 12];
         $passwordHash = password_hash($password, PASSWORD_BCRYPT, $opciones);        
-        
-        $query = "INSERT INTO `usuarios`(`id`, `nombre`, `email`, `password`, `rol`, `fecha_alta`, `estado`, `genero`, `telcel`, `telref`, `urlimg`)
-                  VALUES (null,?,?,?,?,?,?,?,?,?,?)";
+
+        $query = "INSERT INTO `usuarios`(`id`, `nombre`, `email`, `password`, `rol`, `fecha_alta`, `estado`, `genero`, `telcel`, `telref`, `urlimg`, `idempresa`)
+                  VALUES (null,?,?,?,?,?,?,?,?,?,?,?)";
 
         $bindings = [
-            $nombre, $email, $passwordHash, $rol, $fecha_alta, $estado, $genero, $telcel, $telref, $urlimg
+            $nombre, $email, $passwordHash, $rol, $fecha_alta, $estado, $genero, $telcel, $telref, $urlimg,$idempresa
         ];
        
         $db = new ConnectionDatabase();
         $db->getConnection()->autocommit(FALSE);
         try {
-            if ($db->insert($query, 'sssssdssss', $bindings)) {
+            if ($db->insert($query, 'sssssdssssd', $bindings)) {
                 $id = mysqli_insert_id($db->getConnection()); // Obtengo el ID del usuario recién insertado
                 $resultset = [
                     "iduser" => $id,
@@ -70,6 +71,7 @@ function saveUserFromDatabase($usuario) {
                     "telcel" => $telcel,
                     "telref" => $telref,
                     "urlimg" => $urlimg,
+                    "idempresa" => $idempresa,
                     "estado" => "200"
                 ];
                 
@@ -111,7 +113,8 @@ function updateUserFromDatabase($usuario) {
         $telcel = isset($usuario->telcel) ? trim($usuario->telcel) : '000-0000';
         $telref = isset($usuario->telref) ? trim($usuario->telref) : '000-0000';
         $urlimg = isset($usuario->urlimg) ? trim($usuario->urlimg) : '';	
-													  
+		//$empresa = isset($usuario->idempresa) ? trim($usuario->idempresa) : 0;	
+
         if (!empty($password)) {
             $opciones = ['cost' => 12];
             $password = password_hash($password, PASSWORD_BCRYPT, $opciones);

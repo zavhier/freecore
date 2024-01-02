@@ -23,6 +23,11 @@
 							"key": "password",
 							"value": "{{password}}",
 							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "{{company}}",
+							"type": "text"
 						}
 					]
 				},
@@ -119,7 +124,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"demo5\",\r\n            \"email\": \"demo4@gmail.com\",\r\n            \"password\":\"demo4\",\r\n            \"rol\": \"user\",\r\n            \"fecha_alta\": \"2023-12-11 23:42:15\",\r\n            \"estado\": \"1\",\r\n            \"genero\": \"M\",\r\n            \"telcel\": \"555-123456\",\r\n            \"telref\": \"123-965874\",\r\n            \"urlimg\": \"\"\r\n        }",
+					"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"leo\",\r\n            \"email\": \"leo@gmail.com\",\r\n            \"password\":\"leo\",\r\n            \"rol\": \"user\",\r\n            \"fecha_alta\": \"2023-12-11 23:42:15\",\r\n            \"estado\": \"1\",\r\n            \"genero\": \"M\",\r\n            \"telcel\": \"555-123456\",\r\n            \"telref\": \"123-965874\",\r\n            \"urlimg\": \"\",\r\n            \"idempresa\": 1\r\n        }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -354,7 +359,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"Nuevo Producto Notebook\",\r\n            \"descripcion\": \"Computadora personal\",\r\n            \"fecha_creacion\": \"2023-12-15\",\r\n            \"codigo_qr\": \"c://\",\r\n            \"url_qr\": null,\r\n            \"serial_qr\": null,\r\n            \"razon_social_id\": \"1\",\r\n            \"usuario_id\": \"1\",\r\n            \"tipo_estado_id\": \"1\",\r\n            \"tipo_producto_id\": \"1\",\r\n            \"fecha_baja\": null,\r\n            \"urlimg\": \"/asset/img/\",\r\n            \"condicion\": \"1\"                   \r\n        }"
+					"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"Nuevo Producto Notebook\",\r\n            \"descripcion\": \"Computadora personal\",\r\n            \"fecha_creacion\": \"\",\r\n            \"codigo_qr\": \"c://\",\r\n            \"url_qr\": null,\r\n            \"serial\": null,\r\n            \"razon_social_id\": \"1\",\r\n            \"usuario_id\": \"1\",\r\n            \"tipo_estado_id\": \"1\",\r\n            \"tipo_producto_id\": \"1\",\r\n            \"fecha_baja\": null,\r\n            \"urlimg\": \"/asset/img/\",\r\n            \"condicion\": \"1\"                   \r\n        }"
 				},
 				"url": {
 					"raw": "https://freetags.mysite.com.ar/api/index.php/produc",
@@ -416,7 +421,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "        {\r\n            \"id\": \"15\",\r\n            \"nombre\": \"NUEVO NOTEBOOK I9\",\r\n            \"descripcion\": \"Computadora personal\",\r\n            \"fecha_creacion\": \"2023-12-15\",\r\n            \"codigo_qr\": \"c://\",\r\n            \"url_qr\": null,\r\n            \"serial_qr\": null,\r\n            \"razon_social_id\": \"1\",\r\n            \"usuario_id\": \"1\",\r\n            \"tipo_estado_id\": \"2\",\r\n            \"tipo_producto_id\": \"2\",\r\n            \"fecha_baja\": null,\r\n            \"urlimg\": \"/asset/img/\",\r\n            \"condicion\": \"1\"   \r\n        }"
+					"raw": "        {\r\n            \"id\": \"15\",\r\n            \"nombre\": \"NUEVO NOTEBOOK I9\",\r\n            \"descripcion\": \"Computadora personal\",\r\n            \"fecha_creacion\": \"2023-12-15\",\r\n            \"codigo_qr\": \"c://\",\r\n            \"url_qr\": null,\r\n            \"serial\": null,\r\n            \"razon_social_id\": \"1\",\r\n            \"usuario_id\": \"1\",\r\n            \"tipo_estado_id\": \"2\",\r\n            \"tipo_producto_id\": \"2\",\r\n            \"fecha_baja\": null,\r\n            \"urlimg\": \"/asset/img/\",\r\n            \"condicion\": \"1\"   \r\n        }"
 				},
 				"url": {
 					"raw": "https://freetags.mysite.com.ar/api/index.php/produc",
@@ -461,6 +466,42 @@
 						"index.php",
 						"produc",
 						"16"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Producto por Usuario",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n            \"idusuario\": \"1\"   \r\n        }"
+				},
+				"url": {
+					"raw": "https://freetags.mysite.com.ar/api/index.php/producbyuser",
+					"protocol": "https",
+					"host": [
+						"freetags",
+						"mysite",
+						"com",
+						"ar"
+					],
+					"path": [
+						"api",
+						"index.php",
+						"producbyuser"
 					]
 				}
 			},
@@ -579,6 +620,49 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "https://freetags.mysite.com.ar/api/index.php/auth",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "leo@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "leo",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://freetags.mysite.com.ar/api/index.php/auth",
+					"protocol": "https",
+					"host": [
+						"freetags",
+						"mysite",
+						"com",
+						"ar"
+					],
+					"path": [
+						"api",
+						"index.php",
+						"auth"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -615,6 +699,11 @@
 		{
 			"key": "password",
 			"value": "peperina34",
+			"type": "string"
+		},
+		{
+			"key": "company",
+			"value": "0",
 			"type": "string"
 		}
 	]

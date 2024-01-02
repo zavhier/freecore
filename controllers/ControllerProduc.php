@@ -21,6 +21,21 @@ function getProducByIdFromDatabase($id){
     return $resultset;
 }
 
+function getProducByUserFromDatabase($producto){
+
+    $resultset = [];
+
+    $db = new ConnectionDatabase();
+    if (isset($producto->idusuario) && !empty(trim($producto->idusuario))) {     
+        $id = $producto->idusuario;
+        $query = "SELECT * FROM productos WHERE usuario_id=?";
+        $resultset = $db->runQuery($query,'d',$bindings=[$id]);  	 
+    }
+    $db->close();	
+
+    return $resultset;
+}
+
 function getProducTypeFromDatabase(){
 	$db = new ConnectionDatabase();
     $query = "SELECT * FROM tipo_producto";
@@ -64,7 +79,7 @@ function saveProducFromDatabase($producto) {
         $codigo_qr = !empty($producto->codigo_qr) ? $producto->codigo_qr : ''; 
 
         $url_qr = !empty($producto->url_qr) ? $producto->url_qr : null; 
-        $serial_qr = !empty($producto->serial_qr) ? $producto->serial_qr : null; 
+        $serial = !empty($producto->serial) ? $producto->serial : null; 
         $razon_social_id = !empty($producto->razon_social_id) ? $producto->razon_social_id : null; 
         $usuario_id = trim($producto->usuario_id);
         $tipo_estado_id = !empty($producto->tipo_estado_id) ? $producto->tipo_estado_id : null;
@@ -73,9 +88,9 @@ function saveProducFromDatabase($producto) {
         $urlimg = !empty($producto->urlimg) ? $producto->urlimg : null;
         $condicion = !empty($producto->condicion) ? $producto->condicion : 1;
 
-        $query = "INSERT INTO `productos`(`id`, `nombre`, `descripcion`, `fecha_creacion`, `codigo_qr`, `url_qr`, `serial_qr`, `razon_social_id`,`usuario_id`,`tipo_estado_id`,`tipo_producto_id`,`fecha_baja`,`urlimg`,`condicion`) VALUES (null,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $query = "INSERT INTO `productos`(`id`, `nombre`, `descripcion`, `fecha_creacion`, `codigo_qr`, `url_qr`, `serial`, `razon_social_id`,`usuario_id`,`tipo_estado_id`,`tipo_producto_id`,`fecha_baja`,`urlimg`,`condicion`) VALUES (null,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        $bindings = [$nombre, $descripcion, $fecha_creacion, $codigo_qr,$url_qr,$serial_qr,$razon_social_id,$usuario_id,
+        $bindings = [$nombre, $descripcion, $fecha_creacion, $codigo_qr,$url_qr,$serial,$razon_social_id,$usuario_id,
                     $tipo_estado_id,$tipo_producto_id,$fecha_baja,$urlimg,$condicion
         ];
 
@@ -91,7 +106,7 @@ function saveProducFromDatabase($producto) {
                     "fecha_creacion" => $fecha_creacion,
                     "codigo_qr" => $codigo_qr,
                     "url_qr"=>$url_qr,
-                    "serial_qr"=>$serial_qr,
+                    "serial"=>$serial,
                     "razon_social_id" => $razon_social_id,
                     "usuario_id" => $usuario_id,
                     "tipo_estado_id" => $tipo_estado_id,
@@ -134,7 +149,7 @@ function updateProducFromDatabase($producto) {
         $fecha_creacion = !empty($producto->fecha_creacion) ? $producto->fecha_creacion : date('Y-m-d H:i:s');      
         $codigo_qr = !empty($producto->codigo_qr) ? $producto->codigo_qr : '';         
         $url_qr = !empty($producto->url_qr) ? $producto->url_qr : null; 
-        $serial_qr = !empty($producto->serial_qr) ? $producto->serial_qr : null; 
+        $serial = !empty($producto->serial) ? $producto->serial : null; 
         $razon_social_id = !empty($producto->razon_social_id) ? $producto->razon_social_id : null; 
         $usuario_id = trim($producto->usuario_id);
         $tipo_estado_id = !empty($producto->tipo_estado_id) ? $producto->tipo_estado_id : null;
@@ -144,9 +159,9 @@ function updateProducFromDatabase($producto) {
         $condicion = !empty($producto->condicion) ? $producto->condicion : 1;
         
         $query = "UPDATE `productos` SET `nombre`=?,`descripcion`=?,`fecha_creacion`=?,`codigo_qr`=?, `url_qr`=?, ".
-        "`serial_qr`=?, `razon_social_id`=?, `usuario_id`=?,`tipo_estado_id`=?,`tipo_producto_id`=?,`fecha_baja`=?,`urlimg`=?,`condicion`=? WHERE id=?";
+        "`serial`=?, `razon_social_id`=?, `usuario_id`=?,`tipo_estado_id`=?,`tipo_producto_id`=?,`fecha_baja`=?,`urlimg`=?,`condicion`=? WHERE id=?";
 
-        $bindings = [$nombre, $descripcion, $fecha_creacion, $codigo_qr,$url_qr,$serial_qr,$razon_social_id,$usuario_id,
+        $bindings = [$nombre, $descripcion, $fecha_creacion, $codigo_qr,$url_qr,$serial,$razon_social_id,$usuario_id,
                     $tipo_estado_id,$tipo_producto_id,$fecha_baja,$urlimg,$condicion, $id
         ];
         $db = new ConnectionDatabase();
@@ -160,7 +175,7 @@ function updateProducFromDatabase($producto) {
                     "fecha_creacion" => $fecha_creacion,
                     "codigo_qr" => $codigo_qr,
                     "url_qr"=>$url_qr,
-                    "serial_qr"=>$serial_qr,
+                    "serial"=>$serial,
                     "razon_social_id" => $razon_social_id,
                     "usuario_id" => $usuario_id,
                     "tipo_estado_id" => $tipo_estado_id,

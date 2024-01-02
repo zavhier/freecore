@@ -47,6 +47,13 @@ function handleGetRequest($request,$token) {
 		}		
     }
 	
+	if (strpos($request, '/api/producbyuser') !== false) {   
+		if (validateAuthorization($token, $request, "producbyuser")) {
+			$payload = file_get_contents('php://input'); 
+			$params = json_decode($payload);
+			$response = getProducByUserFromDatabase($params);
+		}		
+    }
 
 	if (strpos($request, '/api/productype') !== false) {   
 		if (validateAuthorization($token, $request, "productype")) {				
@@ -87,8 +94,9 @@ function handlePostRequest($request,$token) {
 		if($url == "auth"){
 			$user = $_POST['username'];
 			$pass = $_POST['password'];
-			$response = getUsersAuthenticate($user,$pass);
-			return response::json($response);	  
+			$company = $_POST['company'];
+			$response = getUsersAuthenticate($user,$pass, $company);
+			return response::json($response); 
 		}
 	}	
 
