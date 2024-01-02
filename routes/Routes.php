@@ -46,7 +46,29 @@ function handleGetRequest($request,$token) {
 			$response = getProducAllFromDatabase();
 		}		
     }
-		
+	
+
+	if (strpos($request, '/api/productype') !== false) {   
+		if (validateAuthorization($token, $request, "productype")) {				
+			$response = getProducTypeFromDatabase();
+		}		
+    }
+
+	if (strpos($request, '/api/productstate') !== false) {   
+		if (validateAuthorization($token, $request, "productstate")) {				
+			$response = getProducEstatusFromDatabase();
+		}		
+    }
+
+	if (strpos($request, '/api/company') !== false) {   
+		$split = (explode("/", $request));	
+		$url = $split[2];	
+		if($url == "company"){
+			$authorization="";
+			$response = getCompanyFromDatabase();
+		}
+    }
+
 	response::json($response,$authorization);	
 }
 

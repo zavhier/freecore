@@ -498,6 +498,87 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Tipo Producto Obtener",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://freetags.mysite.com.ar/api/index.php/productype",
+					"protocol": "https",
+					"host": [
+						"freetags",
+						"mysite",
+						"com",
+						"ar"
+					],
+					"path": [
+						"api",
+						"index.php",
+						"productype"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Estado Producto Obtener",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://freetags.mysite.com.ar/api/index.php/productstate",
+					"protocol": "https",
+					"host": [
+						"freetags",
+						"mysite",
+						"com",
+						"ar"
+					],
+					"path": [
+						"api",
+						"index.php",
+						"productstate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Empresa Obtener",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://freetags.mysite.com.ar/api/index.php/company",
+					"protocol": "https",
+					"host": [
+						"freetags",
+						"mysite",
+						"com",
+						"ar"
+					],
+					"path": [
+						"api",
+						"index.php",
+						"company"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -523,7 +604,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwMjk1MDQ1MSwicm9sIjoibWFuYWdlciJ9.hP8/lSQmMmAuAHMN+b4CMKgS9Af5xLcQBrK5Gy2ON2M=",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwNDIzNDQyMSwicm9sIjoibWFuYWdlciJ9.lYf4IXexT6uRc+ykqMyIZ3zXxP9nxhGW1+x+dZCJmic=",
 			"type": "string"
 		},
 		{

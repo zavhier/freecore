@@ -21,6 +21,33 @@ function getProducByIdFromDatabase($id){
     return $resultset;
 }
 
+function getProducTypeFromDatabase(){
+	$db = new ConnectionDatabase();
+    $query = "SELECT * FROM tipo_producto";
+    $resultset = $db->runBaseQuery($query); 	 
+	$db->close();	
+
+    return $resultset;
+}
+
+function getProducEstatusFromDatabase(){
+	$db = new ConnectionDatabase();
+    $query = "SELECT * FROM tipo_estado";
+    $resultset = $db->runBaseQuery($query); 	 
+	$db->close();	
+
+    return $resultset;
+}
+
+function getCompanyFromDatabase(){
+	$db = new ConnectionDatabase();
+    $query = "SELECT * FROM empresas";
+    $resultset = $db->runBaseQuery($query); 	 
+	$db->close();	
+
+    return $resultset;
+}
+
 function saveProducFromDatabase($producto) {
 
     $resultset = [];

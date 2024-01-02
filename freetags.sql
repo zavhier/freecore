@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 22-12-2023 a las 13:33:10
+-- Tiempo de generación: 02-01-2024 a las 12:02:29
 -- Versión del servidor: 10.5.23-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `freetags`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empresas`
+--
+
+CREATE TABLE `empresas` (
+  `id` int(11) NOT NULL,
+  `descripcion` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `empresas`
+--
+
+INSERT INTO `empresas` (`id`, `descripcion`) VALUES
+(1, 'FreeTags'),
+(2, 'SafeTags');
 
 -- --------------------------------------------------------
 
@@ -116,7 +135,7 @@ CREATE TABLE `tipo_producto` (
 --
 
 INSERT INTO `tipo_producto` (`id`, `descripcion`) VALUES
-(1, 'Freetags'),
+(1, 'FreeTags'),
 (2, 'SafeBags');
 
 -- --------------------------------------------------------
@@ -173,6 +192,12 @@ INSERT INTO `usuarios_razon_social` (`id`, `usuario_id`, `razon_social_id`) VALU
 --
 
 --
+-- Indices de la tabla `empresas`
+--
+ALTER TABLE `empresas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `productos`
 --
 ALTER TABLE `productos`
@@ -217,6 +242,12 @@ ALTER TABLE `usuarios_razon_social`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `empresas`
+--
+ALTER TABLE `empresas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
