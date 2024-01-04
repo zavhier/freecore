@@ -32,18 +32,24 @@ function handleGetRequest($request,$token) {
 	if (strpos($request, '/api/user') !== false) {   
 		if (validateAuthorization($token, $request, "user")) {				
 			$response = getUsersAllFromDatabase();
+		}else{
+			return response::json('',401);
 		}		
     }
 
 	if (strpos($request, '/api/socialreason') !== false) {   
 		if (validateAuthorization($token, $request, "socialreason")) {				
 			$response = getAllSocialReasonsFromDatabase();
+		}else{
+			return response::json('',401);
 		}		
     }	
 
 	if (strpos($request, '/api/produc') !== false) {   
 		if (validateAuthorization($token, $request, "produc")) {				
 			$response = getProducAllFromDatabase();
+		}else{
+			return response::json('',401);
 		}		
     }
 	
@@ -52,18 +58,24 @@ function handleGetRequest($request,$token) {
 			$payload = file_get_contents('php://input'); 
 			$params = json_decode($payload);
 			$response = getProducByUserFromDatabase($params);
+		}else{
+			return response::json('',401);
 		}		
     }
 
 	if (strpos($request, '/api/productype') !== false) {   
 		if (validateAuthorization($token, $request, "productype")) {				
 			$response = getProducTypeFromDatabase();
+		}else{
+			return response::json('',401);
 		}		
     }
 
 	if (strpos($request, '/api/productstate') !== false) {   
 		if (validateAuthorization($token, $request, "productstate")) {				
 			$response = getProducEstatusFromDatabase();
+		}else{
+			return response::json('',401);
 		}		
     }
 
@@ -111,11 +123,13 @@ function handlePostRequest($request,$token) {
 	}		
 
 	if ($request === '/api/user') {
-		if (validateAuthorization($token, $request, "user")) {	
+		$split = (explode("/", $request));	
+		$url = $split[2];	
+		if($url == "user"){		
 			$payload = file_get_contents('php://input'); 				
 			$params = json_decode($payload);
 			$response = saveUserFromDatabase($params);	
-			return response::json($response,$authorization);	  
+			return response::json($response);	  
 		}
 	}		
 
@@ -125,6 +139,8 @@ function handlePostRequest($request,$token) {
 			$params = json_decode($payload);
 			$response = saveSocialReasonFromDatabase($params);	
 			return response::json($response,$authorization);	  
+		}else{
+			return response::json('',401);
 		}
 	}	
 
@@ -134,6 +150,8 @@ function handlePostRequest($request,$token) {
 			$params = json_decode($payload);
 			$response = saveProducFromDatabase($params);	
 			return response::json($response,$authorization);	  
+		}else{
+			return response::json('',401);
 		}
 	}
 
@@ -143,6 +161,8 @@ function handlePostRequest($request,$token) {
 			$params = json_decode($payload);
 			$response = SendMail($params);	
 			return response::json($response,$authorization);	  
+		}else{
+			return response::json('',401);
 		}
 	}	
 	
@@ -162,6 +182,8 @@ function handlePutRequest($request,$token) {
 			$payload = file_get_contents('php://input'); 
 			$params = json_decode($payload);
 			$response = updateUserFromDatabase($params);	
+		}else{
+			return response::json('',401);
 		}
     }
 
@@ -170,6 +192,8 @@ function handlePutRequest($request,$token) {
 			$payload = file_get_contents('php://input'); 
 			$params = json_decode($payload);
 			$response = updateSocialReasonFromDatabase($params);	
+		}else{
+			return response::json('',401);
 		}
     }	
 
@@ -178,6 +202,8 @@ function handlePutRequest($request,$token) {
 			$payload = file_get_contents('php://input'); 
 			$params = json_decode($payload);
 			$response = updateProducFromDatabase($params);				
+		}else{
+			return response::json('',401);
 		}
     }
 
@@ -199,6 +225,8 @@ function handleDeleteRequest($request,$token) {
 		if (validateAuthorization($token, $request, "socialreason")) {	
 			removeSocialReasonFromDatabase($id);				
 			$response["estado"] = "200";
+		}else{
+			return response::json('',401);
 		}		  
     }	
 
@@ -206,6 +234,8 @@ function handleDeleteRequest($request,$token) {
 		if (validateAuthorization($token, $request, "produc")) {	
 			removeProducFromDatabase($id);				
 			$response["estado"] = "200";
+		}else{
+			return response::json('',401);
 		}		  
     }	
 
@@ -213,6 +243,8 @@ function handleDeleteRequest($request,$token) {
 		if (validateAuthorization($token, $request, "dissolveuser")) {	
 			removeUserCompletelyFromDatabase($id);				
 			$response["estado"] = "200";
+		}else{
+			return response::json('',401);
 		}		  
     }	
 
