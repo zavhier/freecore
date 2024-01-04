@@ -10,10 +10,16 @@ class response {
     const HTTP_200_SUCCESS = 'HTTP_200_SUCCESS: Solicitud ha tenido éxito';
     const HTTP_401_UNAUTHORIZED = 'HTTP_401_UNAUTHORIZED: Es necesario autenticar para obtener la respuesta solicitada';
     const HTTP_404_NOT_FOUND = 'HTTP_404_NOT_FOUND: El servidor no pudo encontrar el contenido solicitado';
+	const HTTP_501_NOT_FOUND = 'HTTP_501_NOT_FOUND: El servidor no pudo encontrar la ruta solicitada';
 
     private static function generateUnauthorizedResponse() {
 		header('Content-Type: application/json; charset=utf-8');
 		return '{"data": [], "total": 0, "estado": 401, "detalle": "'. response::HTTP_401_UNAUTHORIZED.'"}';
+    }
+
+	private static function generateInvalidRouteResponse() {
+		header('Content-Type: application/json; charset=utf-8');
+		return '{"data": [], "total": 0, "estado": 501, "detalle": "'. response::HTTP_501_NOT_FOUND.'"}';
     }
 
     private static function generateResponse($response) {
@@ -34,6 +40,9 @@ class response {
 		if ($authorization == 401) {
 			echo self::generateUnauthorizedResponse();
 		}
+		elseif ($authorization == 501) {
+			echo self::generateInvalidRouteResponse();
+		}		
 		else{
 			echo self::generateResponse($response);
 		}
