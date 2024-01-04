@@ -119,12 +119,13 @@
 					{
 						"key": "Authorization",
 						"value": "{{token}}",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"leo\",\r\n            \"email\": \"leo@gmail.com\",\r\n            \"password\":\"leo\",\r\n            \"rol\": \"user\",\r\n            \"fecha_alta\": \"2023-12-11 23:42:15\",\r\n            \"estado\": \"1\",\r\n            \"genero\": \"M\",\r\n            \"telcel\": \"555-123456\",\r\n            \"telref\": \"123-965874\",\r\n            \"urlimg\": \"\",\r\n            \"idempresa\": 1\r\n        }",
+					"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"usuario de prueba\",\r\n            \"email\": \"prueba@gmail.com\",\r\n            \"password\":\"leo\",\r\n            \"rol\": \"user\",\r\n            \"fecha_alta\": \"2023-12-11 23:42:15\",\r\n            \"estado\": \"1\",\r\n            \"genero\": \"F\",\r\n            \"telcel\": \"555-123456\",\r\n            \"telref\": \"123-965874\",\r\n            \"urlimg\": \"\",\r\n            \"idempresa\": 2\r\n        }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -182,6 +183,42 @@
 						"api",
 						"index.php",
 						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Usuario por ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 26\r\n}"
+				},
+				"url": {
+					"raw": "https://freetags.mysite.com.ar/api/index.php/userbyid",
+					"protocol": "https",
+					"host": [
+						"freetags",
+						"mysite",
+						"com",
+						"ar"
+					],
+					"path": [
+						"api",
+						"index.php",
+						"userbyid"
 					]
 				}
 			},
@@ -421,7 +458,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "        {\r\n            \"id\": \"15\",\r\n            \"nombre\": \"NUEVO NOTEBOOK I9\",\r\n            \"descripcion\": \"Computadora personal\",\r\n            \"fecha_creacion\": \"2023-12-15\",\r\n            \"codigo_qr\": \"c://\",\r\n            \"url_qr\": null,\r\n            \"serial\": null,\r\n            \"razon_social_id\": \"1\",\r\n            \"usuario_id\": \"1\",\r\n            \"tipo_estado_id\": \"2\",\r\n            \"tipo_producto_id\": \"2\",\r\n            \"fecha_baja\": null,\r\n            \"urlimg\": \"/asset/img/\",\r\n            \"condicion\": \"1\"   \r\n        }"
+					"raw": "        {\r\n            \"id\": \"19\",\r\n            \"nombre\": \"Actualizado P2\",\r\n            \"descripcion\": \"Lapto nueva\",\r\n            \"fecha_creacion\": \"2023-12-15\",\r\n            \"codigo_qr\": \"c://\",\r\n            \"url_qr\": null,\r\n            \"serial\": \"123443234432344\",\r\n            \"razon_social_id\": null,\r\n            \"usuario_id\": \"17\",\r\n            \"tipo_estado_id\": \"2\",\r\n            \"tipo_producto_id\": \"2\",\r\n            \"fecha_baja\": null,\r\n            \"urlimg\": \"/asset/img/\",\r\n            \"condicion\": \"1\"   \r\n        }"
 				},
 				"url": {
 					"raw": "https://freetags.mysite.com.ar/api/index.php/produc",
@@ -688,7 +725,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwNDIzNDQyMSwicm9sIjoibWFuYWdlciJ9.lYf4IXexT6uRc+ykqMyIZ3zXxP9nxhGW1+x+dZCJmic=",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwNDQxNjQ1Nywicm9sIjoibWFuYWdlciJ9.tngTWIImldqJncIpkIvIWwQaH6iqCYLGUZYXNSMVhfo=",
 			"type": "string"
 		},
 		{

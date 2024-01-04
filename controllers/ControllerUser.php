@@ -11,11 +11,10 @@ function getUsersAllFromDatabase(){
     return $resultset;
 }
 
-function getUsersByIdFromDatabase($id){
+function getUserByIdFromDatabase($usuario){
 	$db = new ConnectionDatabase();
     $query = "SELECT id, nombre, email, rol, fecha_alta, estado, genero, telcel, telref, urlimg FROM usuarios WHERE id=?";
-    $resultset = $db->runBaseQuery($query);  	   
-    $resultset = $db->runQuery($query,'d',$bindings=[$id]);  	 
+    $resultset = $db->runQuery($query,'d',$bindings=[$usuario->id]);  	 
 	$db->close();	
 
     return $resultset;
