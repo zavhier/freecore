@@ -21,11 +21,11 @@ function validateRoute($request){
 function validateAuthorization($token, $request, $expectedUrl) {
 	$split = (explode("/", $request));	
 	$url = $split[2];
-	if($url === $expectedUrl){
+	if($url === $expectedUrl){				
 		if (!isset($token) || empty($token)) {
-			return false;
+			return response::json('',401);
 		}
-		$authorization = checkAuthToken($token);
+		$authorization = checkAuthToken($token);				
 		if($authorization !== 202){
 			return response::json('',401);
 		}

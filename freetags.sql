@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 02-01-2024 a las 12:02:29
+-- Tiempo de generación: 05-01-2024 a las 11:34:49
 -- Versión del servidor: 10.5.23-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -53,7 +53,7 @@ CREATE TABLE `productos` (
   `fecha_creacion` timestamp NULL DEFAULT NULL,
   `codigo_qr` varchar(255) DEFAULT NULL,
   `url_qr` varchar(255) DEFAULT NULL,
-  `serial_qr` varchar(50) DEFAULT NULL,
+  `serial` varchar(50) DEFAULT NULL,
   `razon_social_id` int(11) DEFAULT NULL,
   `usuario_id` int(11) DEFAULT NULL,
   `tipo_estado_id` int(11) DEFAULT NULL,
@@ -67,11 +67,13 @@ CREATE TABLE `productos` (
 -- Volcado de datos para la tabla `productos`
 --
 
-INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `fecha_creacion`, `codigo_qr`, `url_qr`, `serial_qr`, `razon_social_id`, `usuario_id`, `tipo_estado_id`, `tipo_producto_id`, `fecha_baja`, `urlimg`, `condicion`) VALUES
+INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `fecha_creacion`, `codigo_qr`, `url_qr`, `serial`, `razon_social_id`, `usuario_id`, `tipo_estado_id`, `tipo_producto_id`, `fecha_baja`, `urlimg`, `condicion`) VALUES
 (1, 'ASUS A51', 'Celular', '2023-12-11 03:00:00', '', NULL, NULL, 1, 1, 1, 1, NULL, NULL, 1),
 (2, 'Galaxy S22', 'Celular', '2023-12-13 03:00:00', 'A123456', NULL, NULL, 2, 1, 1, 1, NULL, NULL, 1),
 (11, 'Galaxy S22 Demo', 'Tablet', '2023-12-15 03:00:00', 'B123456', NULL, NULL, 1, 1, 1, 1, NULL, NULL, 1),
-(13, 'ASUS A51 XXXXXXXXXXX', 'Celular', '2023-12-15 03:00:00', 'C123456', NULL, NULL, 1, 1, 1, 1, NULL, NULL, 1);
+(13, 'NUEVO NOTEBOOK I9', 'Computadora personal', '2023-12-15 03:00:00', 'c://', NULL, '11212121', 1, 17, 2, 2, NULL, '/asset/img/', 1),
+(17, 'Guitarra', 'Computadora personal', '2024-01-02 17:01:26', '', NULL, NULL, NULL, 17, 1, 2, NULL, '/asset/img/', 1),
+(18, 'XXX Nuevo Producto Notebook', 'XXXX Computadora personal', '2024-01-02 17:07:42', 'c://', NULL, NULL, 1, 1, 1, 1, NULL, '/asset/img/', 1);
 
 -- --------------------------------------------------------
 
@@ -155,16 +157,21 @@ CREATE TABLE `usuarios` (
   `genero` varchar(15) DEFAULT NULL,
   `telcel` varchar(30) NOT NULL,
   `telref` varchar(30) NOT NULL,
-  `urlimg` varchar(150) NOT NULL
+  `urlimg` varchar(150) NOT NULL,
+  `idempresa` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `fecha_alta`, `estado`, `genero`, `telcel`, `telref`, `urlimg`) VALUES
-(1, 'adminó', 'admin', '$2a$12$IYNu9hUzAMzBr/aq0gzyKOOCYawyNGQPYr9zaFdkKsRoX1M8cLBM.', 'manager', '2023-12-12 02:42:15', 1, NULL, '', '', ''),
-(6, 'demo1', 'demo1@gmail.com', '$2y$12$Nizv66PxLbVsVbeY.bBzh.qVB2uQZsgz2FA4WbkcYf6BqrgcqvWPK', 'user', '2023-12-12 02:42:15', 1, 'F', '555-123456', '123-965874', '');
+INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `fecha_alta`, `estado`, `genero`, `telcel`, `telref`, `urlimg`, `idempresa`) VALUES
+(1, 'adminó', 'admin', '$2a$12$IYNu9hUzAMzBr/aq0gzyKOOCYawyNGQPYr9zaFdkKsRoX1M8cLBM.', 'manager', '2023-12-12 02:42:15', 1, NULL, '', '', '', 0),
+(6, 'demo1', 'demo1@gmail.com', '$2y$12$Nizv66PxLbVsVbeY.bBzh.qVB2uQZsgz2FA4WbkcYf6BqrgcqvWPK', 'user', '2024-01-02 16:05:13', 1, 'F', '555-123456', '123-965874', '', 1),
+(17, 'zavhier', 'zavhier@gmail.com', '$2y$12$itBNHHmOfo662ccJiIF1XubcoID.DZvckqPOq3sBm2w4gIDB9MAwS', 'user', '2024-01-02 16:04:55', 1, 'M', '555-123456', '123-965874', '', 1),
+(18, 'catalina', 'catalina@gmail.com', '$2y$12$vT9zLKJFN4eUtNvEyJ6zo.nEdY5Ucy8VyYceREgu45l7QwLzfb8h2', 'user', '2024-01-02 16:05:02', 1, 'M', '555-123456', '123-965874', '', 2),
+(19, 'leo', 'leo@gmail.com', '$2y$12$w9wYP8dpsOB9DytaG6G1VOigpxKZr7cGm94CQUIfjpA5dBZUM5t5W', 'user', '2024-01-02 16:20:44', 1, 'M', '555-123456', '123-965874', '', 1),
+(26, 'usuario de prueba', 'prueba@gmail.com', '$2y$12$JOVOapM6P54lixbC.rY0weyJ7GdBwzzV/Q.9AQexyyWV9aL1I7ooK', 'user', '2024-01-04 16:52:15', 1, 'F', '555-123456', '123-965874', '', 2);
 
 -- --------------------------------------------------------
 
@@ -253,7 +260,7 @@ ALTER TABLE `empresas`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `razon_social`
@@ -277,7 +284,7 @@ ALTER TABLE `tipo_producto`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios_razon_social`
