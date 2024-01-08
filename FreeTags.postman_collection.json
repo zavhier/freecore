@@ -204,7 +204,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 26\r\n}"
+					"raw": "{\r\n    \"id\": 17\r\n}"
 				},
 				"url": {
 					"raw": "https://freetags.mysite.com.ar/api/index.php/userbyid",
@@ -219,6 +219,78 @@
 						"api",
 						"index.php",
 						"userbyid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Usuario por Email",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"zavhier@gmail.com\"\r\n}"
+				},
+				"url": {
+					"raw": "https://freetags.mysite.com.ar/api/index.php/userbyemail",
+					"protocol": "https",
+					"host": [
+						"freetags",
+						"mysite",
+						"com",
+						"ar"
+					],
+					"path": [
+						"api",
+						"index.php",
+						"userbyemail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Usuario por Celular",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"telcel\": \"555-123453\"\r\n}"
+				},
+				"url": {
+					"raw": "https://freetags.mysite.com.ar/api/index.php/userbyphone",
+					"protocol": "https",
+					"host": [
+						"freetags",
+						"mysite",
+						"com",
+						"ar"
+					],
+					"path": [
+						"api",
+						"index.php",
+						"userbyphone"
 					]
 				}
 			},
@@ -725,7 +797,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwNDQxNjQ1Nywicm9sIjoibWFuYWdlciJ9.tngTWIImldqJncIpkIvIWwQaH6iqCYLGUZYXNSMVhfo=",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwNDc2MzI0Nywicm9sIjoibWFuYWdlciJ9.az53ySpiqQ7mJPOfatAgxBaHCX2ouVgH2cit3nj7CIw=",
 			"type": "string"
 		},
 		{
