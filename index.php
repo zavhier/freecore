@@ -17,6 +17,7 @@ $token = isset($headers['Authorization']) ? $headers['Authorization'] : null;
 // Manejo de las solicitudes HTTP (GET, POST, PUT, DELETE, etc.)
 $method = $_SERVER['REQUEST_METHOD'];
 $request = $_SERVER['REQUEST_URI'];
+
 $request = preg_replace('/\/index\.php/m',"", $request);
 
 switch ($method) {

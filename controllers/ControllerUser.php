@@ -20,6 +20,24 @@ function getUserByIdFromDatabase($usuario){
     return $resultset;
 }
 
+function getUserByEmailFromDatabase($usuario){
+	$db = new ConnectionDatabase();
+    $query = "SELECT id, nombre, email, rol, fecha_alta, estado, genero, telcel, telref, urlimg FROM usuarios WHERE email=?";
+    $resultset = $db->runQuery($query,'s',$bindings=[$usuario->email]);  	 
+	$db->close();	
+
+    return $resultset;
+}
+
+function getUserByPhoneFromDatabase($usuario){
+	$db = new ConnectionDatabase();
+    $query = "SELECT id, nombre, email, rol, fecha_alta, estado, genero, telcel, telref, urlimg FROM usuarios WHERE telcel=?";
+    $resultset = $db->runQuery($query,'s',$bindings=[$usuario->telcel]);  	 
+	$db->close();	
+
+    return $resultset;
+}
+
 function saveUserFromDatabase($usuario) {
     $resultset = [];
 
