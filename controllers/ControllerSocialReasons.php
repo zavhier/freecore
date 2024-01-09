@@ -12,6 +12,27 @@ function getAllSocialReasonsFromDatabase(){
     return $resultset;
 }
 
+function getSocialReasonsByIdFromDatabase($param){
+	$db = new ConnectionDatabase();
+    $query = "SELECT * FROM razon_social WHERE id=?";
+    $resultset = $db->runQuery($query,'d',$bindings=[$param]);  
+	$db->close();	
+
+    return $resultset;
+}
+
+function getSocialReasonsByNameFromDatabase($param){
+	$db = new ConnectionDatabase();
+    $param = str_replace("%20", " ", $param);
+    $param = trim($param);
+    $param = stripslashes($param);
+    $param = htmlspecialchars($param);    
+    $resultset = $db->runBaseQuery("SELECT * FROM razon_social WHERE nombre=". $param);
+	$db->close();	
+
+    return $resultset;
+}
+
 function saveSocialReasonFromDatabase($razonsocial){
     $resultset = [];
 

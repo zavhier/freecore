@@ -11,7 +11,7 @@ function validateRoute($request){
 	$split = (explode("/", $request));	
 	$route = $split[2];
 	// siempre que se cree una nueva ruta la debemos agregar en esta seccion
-    $rutaspermitidas = [ "auth","user", "userbyid", "socialreason","produc","producbyuser","productype",
+    $rutaspermitidas = [ "auth","user", "userbyid", "socialreason", "socialreasonbyid", "socialreasonbyname",  "produc","producbyuser","productype",
 	                     "productstate","company","encryptpass","sendmail","dissolveuser", "userbyemail", "userbyphone"];
     $rutaspermitidas = array_map('strtolower', $rutaspermitidas);
     $route = strtolower($route);
@@ -49,6 +49,9 @@ function handleGetRequest($request,$token) {
 		$response=[];	
 		$authorization = checkAuthToken($token);
 		
+		$split = (explode("/", $request));	
+		$param = $split[3];	
+
 		if (strpos($request, '/api/user') !== false) {   
 
 			if (validateAuthorization($token, $request, "user")) {				
@@ -60,9 +63,7 @@ function handleGetRequest($request,$token) {
 		if (strpos($request, '/api/userbyid') !== false) {   
 
 			if (validateAuthorization($token, $request, "userbyid")) {
-				$payload = file_get_contents('php://input'); 
-				$params = json_decode($payload);
-				$response = getUserByIdFromDatabase($params);	
+				$response = getUserByIdFromDatabase($param);	
 				response::json($response,$authorization);
 			}
 		}	
@@ -70,9 +71,7 @@ function handleGetRequest($request,$token) {
 		if (strpos($request, '/api/userbyemail') !== false) {   
 
 			if (validateAuthorization($token, $request, "userbyemail")) {
-				$payload = file_get_contents('php://input'); 
-				$params = json_decode($payload);
-				$response = getUserByEmailFromDatabase($params);	
+				$response = getUserByEmailFromDatabase($param);	
 				response::json($response,$authorization);
 			}
 		}
@@ -80,9 +79,7 @@ function handleGetRequest($request,$token) {
 		if (strpos($request, '/api/userbyphone') !== false) {   
 
 			if (validateAuthorization($token, $request, "userbyphone")) {
-				$payload = file_get_contents('php://input'); 
-				$params = json_decode($payload);
-				$response = getUserByPhoneFromDatabase($params);	
+				$response = getUserByPhoneFromDatabase($param);	
 				response::json($response,$authorization);
 			}
 		}		
@@ -95,6 +92,22 @@ function handleGetRequest($request,$token) {
 			}
 		}	
 
+		if (strpos($request, '/api/socialreasonbyid') !== false) {   
+
+			if (validateAuthorization($token, $request, "socialreasonbyid")) {				
+				$response = getSocialReasonsByIdFromDatabase($param);
+				response::json($response,$authorization);
+			}
+		}			
+		
+		if (strpos($request, '/api/socialreasonbyname') !== false) {   
+
+			if (validateAuthorization($token, $request, "socialreasonbyname")) {	
+				$response = getSocialReasonsByNameFromDatabase($param);
+				response::json($response,$authorization);
+			}
+		}		
+
 		if (strpos($request, '/api/produc') !== false) {   
 
 			if (validateAuthorization($token, $request, "produc")) {				
@@ -106,9 +119,7 @@ function handleGetRequest($request,$token) {
 		if (strpos($request, '/api/producbyuser') !== false) {   
 
 			if (validateAuthorization($token, $request, "producbyuser")) {
-				$payload = file_get_contents('php://input'); 
-				$params = json_decode($payload);
-				$response = getProducByUserFromDatabase($params);
+				$response = getProducByUserFromDatabase($param);
 				response::json($response,$authorization);
 			}	
 		}

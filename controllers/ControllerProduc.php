@@ -21,15 +21,14 @@ function getProducByIdFromDatabase($id){
     return $resultset;
 }
 
-function getProducByUserFromDatabase($producto){
+function getProducByUserFromDatabase($param){
 
     $resultset = [];
 
     $db = new ConnectionDatabase();
-    if (isset($producto->idusuario) && !empty(trim($producto->idusuario))) {     
-        $id = $producto->idusuario;
+    if (isset($param) && !empty(trim($param))) {     
         $query = "SELECT * FROM productos WHERE usuario_id=?";
-        $resultset = $db->runQuery($query,'d',$bindings=[$id]);  	 
+        $resultset = $db->runQuery($query,'d',$bindings=[$param]);  	 
     }
     $db->close();	
 

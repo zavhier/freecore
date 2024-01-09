@@ -11,28 +11,29 @@ function getUsersAllFromDatabase(){
     return $resultset;
 }
 
-function getUserByIdFromDatabase($usuario){
+function getUserByIdFromDatabase($param){
 	$db = new ConnectionDatabase();
     $query = "SELECT id, nombre, email, rol, fecha_alta, estado, genero, telcel, telref, urlimg FROM usuarios WHERE id=?";
-    $resultset = $db->runQuery($query,'d',$bindings=[$usuario->id]);  	 
+    $resultset = $db->runQuery($query,'d',$bindings=[$param]);  	 
 	$db->close();	
 
     return $resultset;
 }
 
-function getUserByEmailFromDatabase($usuario){
+function getUserByEmailFromDatabase($param){
 	$db = new ConnectionDatabase();
     $query = "SELECT id, nombre, email, rol, fecha_alta, estado, genero, telcel, telref, urlimg FROM usuarios WHERE email=?";
-    $resultset = $db->runQuery($query,'s',$bindings=[$usuario->email]);  	 
+    $param = str_replace("x", "", $param);
+    $resultset = $db->runQuery($query,'s',$bindings=[$param]);  	 
 	$db->close();	
 
     return $resultset;
 }
 
-function getUserByPhoneFromDatabase($usuario){
+function getUserByPhoneFromDatabase($param){
 	$db = new ConnectionDatabase();
     $query = "SELECT id, nombre, email, rol, fecha_alta, estado, genero, telcel, telref, urlimg FROM usuarios WHERE telcel=?";
-    $resultset = $db->runQuery($query,'s',$bindings=[$usuario->telcel]);  	 
+    $resultset = $db->runQuery($query,'s',$bindings=[$param]);  	 
 	$db->close();	
 
     return $resultset;
