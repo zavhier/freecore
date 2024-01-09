@@ -190,9 +190,6 @@
 		},
 		{
 			"name": "Usuario por ID",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -202,12 +199,8 @@
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"id\": 17\r\n}"
-				},
 				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/userbyid",
+					"raw": "https://freetags.mysite.com.ar/api/index.php/userbyid/17",
 					"protocol": "https",
 					"host": [
 						"freetags",
@@ -218,7 +211,8 @@
 					"path": [
 						"api",
 						"index.php",
-						"userbyid"
+						"userbyid",
+						"17"
 					]
 				}
 			},
@@ -226,9 +220,6 @@
 		},
 		{
 			"name": "Usuario por Email",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -238,12 +229,8 @@
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"zavhier@gmail.com\"\r\n}"
-				},
 				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/userbyemail",
+					"raw": "https://freetags.mysite.com.ar/api/index.php/userbyemail/zavhier@gmail.comx",
 					"protocol": "https",
 					"host": [
 						"freetags",
@@ -254,7 +241,8 @@
 					"path": [
 						"api",
 						"index.php",
-						"userbyemail"
+						"userbyemail",
+						"zavhier@gmail.comx"
 					]
 				}
 			},
@@ -416,6 +404,66 @@
 						"api",
 						"index.php",
 						"socialreason"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Razon Social Obtener por ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://freetags.mysite.com.ar/api/index.php/socialreasonbyid/2",
+					"protocol": "https",
+					"host": [
+						"freetags",
+						"mysite",
+						"com",
+						"ar"
+					],
+					"path": [
+						"api",
+						"index.php",
+						"socialreasonbyid",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Razon Social Obtener por Nombre",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://freetags.mysite.com.ar/api/index.php/socialreasonbyname/'Servicios Centrales, S.L'",
+					"protocol": "https",
+					"host": [
+						"freetags",
+						"mysite",
+						"com",
+						"ar"
+					],
+					"path": [
+						"api",
+						"index.php",
+						"socialreasonbyname",
+						"'Servicios Centrales, S.L'"
 					]
 				}
 			},
@@ -797,7 +845,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwNDc2MzI0Nywicm9sIjoibWFuYWdlciJ9.az53ySpiqQ7mJPOfatAgxBaHCX2ouVgH2cit3nj7CIw=",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwNDg2ODk5OSwicm9sIjoibWFuYWdlciJ9.IssGVhm/lLYeVr5ontQTJ41ccuf/KVR08s2HEerSJWk=",
 			"type": "string"
 		},
 		{
