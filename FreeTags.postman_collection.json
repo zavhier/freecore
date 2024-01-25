@@ -630,9 +630,6 @@
 		},
 		{
 			"name": "Producto por Usuario",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -642,12 +639,8 @@
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "        {\r\n            \"idusuario\": \"1\"   \r\n        }"
-				},
 				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/producbyuser",
+					"raw": "https://freetags.mysite.com.ar/api/index.php/producbyuser/17",
 					"protocol": "https",
 					"host": [
 						"freetags",
@@ -658,7 +651,8 @@
 					"path": [
 						"api",
 						"index.php",
-						"producbyuser"
+						"producbyuser",
+						"17"
 					]
 				}
 			},
@@ -845,7 +839,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwNDg2ODk5OSwicm9sIjoibWFuYWdlciJ9.IssGVhm/lLYeVr5ontQTJ41ccuf/KVR08s2HEerSJWk=",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwNjIyNTE0MCwicm9sIjoibWFuYWdlciJ9.3jN7bRB/Ds8dJYUKs6R7kRrfrfDWQ2tQ2ookjK476PU=",
 			"type": "string"
 		},
 		{
