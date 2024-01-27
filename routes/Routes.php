@@ -12,7 +12,7 @@ function validateRoute($request){
 	$route = $split[2];
 	// siempre que se cree una nueva ruta la debemos agregar en esta seccion
     $rutaspermitidas = [ "auth","user", "userbyid", "socialreason", "socialreasonbyid", "socialreasonbyname",  "produc","producbyuser","productype",
-	                     "productstate","company","encryptpass","sendmail","dissolveuser", "userbyemail", "userbyphone"];
+	                     "productstate","company","encryptpass","sendmail","dissolveuser", "userbyemail", "userbyphone","recoveruser"];
     $rutaspermitidas = array_map('strtolower', $rutaspermitidas);
     $route = strtolower($route);
     if(! in_array($route, $rutaspermitidas)){
@@ -167,11 +167,11 @@ function handlePostRequest($request,$token) {
 	{
 		$response=[];	
 		$authorization = checkAuthToken($token);
+		$split = (explode("/", $request));	
+		$url = $split[2];	
 
 		if ($request === '/api/auth') {	
 
-			$split = (explode("/", $request));	
-			$url = $split[2];	
 			if($url == "auth"){
 				$user = $_POST['username'];
 				$pass = $_POST['password'];
@@ -183,8 +183,6 @@ function handlePostRequest($request,$token) {
 
 		if ($request === '/api/encryptpass') {	
 
-			$split = (explode("/", $request));	
-			$url = $split[2];	
 			if($url == "encryptpass"){
 				$pass = $_POST['password'];
 				$response = getPasswordEncrypt($pass);
@@ -194,8 +192,6 @@ function handlePostRequest($request,$token) {
 
 		if ($request === '/api/user') {
 			
-			$split = (explode("/", $request));	
-			$url = $split[2];	
 			if($url == "user"){		
 				$payload = file_get_contents('php://input'); 				
 				$params = json_decode($payload);
@@ -229,10 +225,20 @@ function handlePostRequest($request,$token) {
 			if (validateAuthorization($token, $request, "sendmail")) {	
 				$payload = file_get_contents('php://input'); 				
 				$params = json_decode($payload);
+
 				$response = SendMail($params);	
 				return response::json($response,$authorization);	  
 			}
-		}	
+		}
+		
+		if ($request === '/api/recoveruser') {
+
+			if($url == "recoveruser"){
+				$mail = $_POST['email'];
+				$response = recoverUser($mail);	
+				return response::json($response);	  
+			}
+		}			
 	
 	}else{
 		response::json('',501);		
