@@ -50,6 +50,49 @@
 			"response": []
 		},
 		{
+			"name": "Autentificacion otro usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "leo@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "nnbq8",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://freetags.mysite.com.ar/api/index.php/auth",
+					"protocol": "https",
+					"host": [
+						"freetags",
+						"mysite",
+						"com",
+						"ar"
+					],
+					"path": [
+						"api",
+						"index.php",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Autentificacion Generar Passw",
 			"request": {
 				"method": "POST",
@@ -145,6 +188,46 @@
 						"api",
 						"index.php",
 						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Usuario Recuperar Contraseña",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "alvarez.leandro.a@gmail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://freetags.mysite.com.ar/api/index.php/recoveruser",
+					"protocol": "https",
+					"host": [
+						"freetags",
+						"mysite",
+						"com",
+						"ar"
+					],
+					"path": [
+						"api",
+						"index.php",
+						"recoveruser"
 					]
 				}
 			},
@@ -771,49 +854,6 @@
 				}
 			},
 			"response": []
-		},
-		{
-			"name": "https://freetags.mysite.com.ar/api/index.php/auth",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "username",
-							"value": "leo@gmail.com",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "leo",
-							"type": "text"
-						},
-						{
-							"key": "company",
-							"value": "1",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/auth",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"auth"
-					]
-				}
-			},
-			"response": []
 		}
 	],
 	"event": [
@@ -839,7 +879,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwNjIyNTE0MCwicm9sIjoibWFuYWdlciJ9.3jN7bRB/Ds8dJYUKs6R7kRrfrfDWQ2tQ2ookjK476PU=",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwNjM4NjgzMCwicm9sIjoibWFuYWdlciJ9.H7+a+z/jRihMHMkMoIW021xZ1FckP9enNKJKFxktjf8=",
 			"type": "string"
 		},
 		{
