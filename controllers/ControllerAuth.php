@@ -19,7 +19,10 @@ function getUsersAuthenticate($email,$pass, $idempresa){
 		$user["idempresa"]=$resultset[0]['idempresa']; 
         $user["rol"]=$resultset[0]['rol']; 
     }else{
-        $user["mensaje"]='Usuario no autentificado';
+		$user["mensaje"]='Usuario no autentificado';
+		if(!isset($idempresa)){
+			$user["mensaje"]='Faltan datos requeridos para autentificar. No se ha proporcionado id de la compañia.';
+		}        
         $user["estado"]="401";
         $user["access_token"]='';
         $user["idusuario"]=''; 

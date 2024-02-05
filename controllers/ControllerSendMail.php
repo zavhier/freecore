@@ -1,7 +1,8 @@
 <?php
 
-require_once 'db.php';
+require_once './db.php';
 require_once './config.php';
+require_once './templates.php';
 
 function SendMail($email){
 
@@ -13,34 +14,19 @@ function SendMail($email){
         !empty(trim($email->correo)) && 
         !empty(trim($email->tipoenvio)) &&
         !empty(trim($email->mensaje))
-    ) { 
-
-        $fecha = date('Y-m-d H:i:s');
-
+    ) {        
         $De      =  config::getEmailFrom();
         $Para    = $email->correo; 
         $Cc      = "";
 
         if($email->tipoenvio == 1){
-            $asunto  = $fecha . " - " . config::getEmailSubjectFreetags();
+            $asunto  = config::getEmailSubjectFreetags();
         }else{
-            $asunto  = $fecha . " - " . config::getEmailSubjectSafeBags();
+            $asunto  = config::getEmailSubjectSafeBags();
         }
-        
-        $mensaje = '
-        <html>
-            <body >
-                <h1>'.$asunto.'</h1>    
-                <hr>
-                <p style="color:#0000FF">Usuario: '.$email->nombre.'</p>
-                <p style="color:#0000FF">Nueva notificación desde formulario punto de contacto website.</p>
-                <hr>
-                <p><b>'.$email->mensaje.'</b></p>
-                <hr>
-            </body>
-        </html>
-        ';
-        
+        		
+		$mensaje = template::emailPointContactTemplate($asunto,$email->nombre, $email->mensaje);	
+		       
         $header  = 'From: ' . $De . " \r\n"; 
         $header .= "X-Mailer: PHP/" . phpversion() . " \r\n"; 
         $header .= "Mime-Version: 1.0 \r\n"; 

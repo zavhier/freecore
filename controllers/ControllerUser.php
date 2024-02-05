@@ -2,6 +2,7 @@
 
 require_once './db.php';
 require_once './config.php';
+require_once './templates.php';
 
 function getUsersAllFromDatabase(){
 	$db = new ConnectionDatabase();
@@ -258,72 +259,12 @@ function recoverUser($email){
                 $db->getConnection()->commit();
               
                 // enviar un mail con el pass provisorio pidiendo que la cambie.
-
-                $fecha = date('Y-m-d H:i:s');
+				// -------------------------------------------------------------
                 $De      =  config::getEmailFrom();
                 $Para    = $email; 
-                $Cc      = "";
-                $asunto  = "Confirmación de Cambio de Contraseña";     
-                $mensaje = '
-                <html lang="es">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Confirmación de Cambio de Contraseña</title>
-                    <style>
-                        body {
-                            font-family: "Arial", sans-serif;
-                            background-color: #f4f4f4;
-                            margin: 0;
-                            padding: 0;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            height: 100vh;
-                        }
-                
-                        .container {
-                            background-color: #fff;
-                            border-radius: 8px;
-                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                            padding: 20px;
-                            max-width: 400px;
-                            width: 100%;
-                            text-align: center;
-                        }
-                
-                        h1 {
-                            color: #333;
-                        }
-                
-                        p {
-                            color: #555;
-                        }
-                
-                        .highlight {
-                            font-weight: bold;
-                            color: #007bff;
-                        }
-                
-                        .footer {
-                            margin-top: 20px;
-                            color: #777;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <h1>Confirmación de Cambio de Contraseña</h1>
-                        <p>Hola '.$nombre.',</p>
-                        <p>Tu contraseña ha sido cambiada con éxito.</p>
-                        <p>Tu nueva contraseña es: <span class="highlight">['.$password.']</span></p>
-                        <p>Si no realizaste este cambio o tienes alguna pregunta, por favor contáctanos.</p>
-                        <p><p>Fecha de actualización: '.$fecha.'</p></p>
-                        <p class="footer">¡Gracias!</p>
-                    </div>
-                </body>
-                </html>
-                ';
+                $Cc      = "";                
+				$asunto  = 'Confirmación de Cambio de Contraseña';     				
+				$mensaje = template::emailMenssageRecoverPasswordTemplate($asunto,$nombre, $password);							
                 $header  = 'From: ' . $De . " \r\n"; 
                 $header .= "X-Mailer: PHP/" . phpversion() . " \r\n"; 
                 $header .= "Mime-Version: 1.0 \r\n"; 
