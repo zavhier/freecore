@@ -21,8 +21,10 @@ function SendMail($email){
 
         if($email->tipoenvio == 1){
             $asunto  = config::getEmailSubjectFreetags();
+        }elseif($email->tipoenvio == 2){
+            config::getEmailSubjectSafeBags();
         }else{
-            $asunto  = config::getEmailSubjectSafeBags();
+            $asunto  = isset($email->asunto) ? trim($email->asunto) : '';
         }
         		
 		$mensaje = template::emailPointContactTemplate($asunto,$email->nombre, $email->mensaje);	
@@ -39,5 +41,7 @@ function SendMail($email){
     $resultset["mensaje"]='Envio de mail automatico';
     $resultset["estado"]="200";
 
+    return $resultset;
+    
 }
 

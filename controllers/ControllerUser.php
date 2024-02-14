@@ -121,15 +121,13 @@ function updateUserFromDatabase($usuario) {
     $resultset = [];
 
     if (
-        isset($usuario->id, $usuario->nombre, $usuario->password, $usuario->email) &&
+        isset($usuario->id, $usuario->nombre, $usuario->email) &&
         !empty(trim($usuario->id)) &&
         !empty(trim($usuario->nombre)) &&
-        !empty(trim($usuario->password)) &&
         !empty(trim($usuario->email))
     ) {
         $id = trim($usuario->id);
         $nombre = trim($usuario->nombre);        
-        $password = trim($usuario->password);
         $email = trim($usuario->email);
         $rol = isset($usuario->rol) ? trim($usuario->rol) : 'user';
         $fecha_alta = !empty($usuario->fecha_alta) ? $usuario->fecha_alta : date('Y-m-d H:i:s');
@@ -138,23 +136,22 @@ function updateUserFromDatabase($usuario) {
         $telcel = isset($usuario->telcel) ? trim($usuario->telcel) : '000-0000';
         $telref = isset($usuario->telref) ? trim($usuario->telref) : '000-0000';
         $urlimg = isset($usuario->urlimg) ? trim($usuario->urlimg) : '';	
-		//$empresa = isset($usuario->idempresa) ? trim($usuario->idempresa) : 0;	
 
         if (!empty($password)) {
             $opciones = ['cost' => 12];
             $password = password_hash($password, PASSWORD_BCRYPT, $opciones);
         }
 
-        $query = "UPDATE `usuarios` SET `nombre`=?, `email`=?, `password`=?, `rol`=?, `fecha_alta`=?, `estado`=?, `genero`=?, `telcel`=?, `telref`=?, `urlimg`=? WHERE `id` = ?";
+        $query = "UPDATE `usuarios` SET `nombre`=?, `email`=?, `rol`=?, `fecha_alta`=?, `estado`=?, `genero`=?, `telcel`=?, `telref`=?, `urlimg`=? WHERE `id` = ?";
 
         $bindings = [
-            $nombre, $email, $password, $rol, $fecha_alta, $estado, $genero, $telcel, $telref, $urlimg, $id
+            $nombre, $email, $rol, $fecha_alta, $estado, $genero, $telcel, $telref, $urlimg, $id
         ];
 
         $db = new ConnectionDatabase();
         $db->getConnection()->autocommit(FALSE);
         try {
-            if ($db->insert($query, 'sssssdssssd', $bindings)) {                
+            if ($db->insert($query, 'ssssdssssd', $bindings)) {                
                 $resultset = [
                     "iduser" => $id,
                     "nombre" => $nombre,

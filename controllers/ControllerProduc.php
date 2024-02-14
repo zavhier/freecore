@@ -11,6 +11,16 @@ function getProducAllFromDatabase(){
     return $resultset;
 }
 
+function getProducByQrCodeFromDatabase($code){
+	$db = new ConnectionDatabase();
+    $query = "SELECT u.id,u.nombre, u.email, u.rol, u.fecha_alta, u.estado, u.genero, u.telcel, u.telref,u.urlimg,u.idempresa
+    FROM productos p INNER JOIN usuarios u ON p.usuario_id = u.id WHERE p.codigo_qr = ?;";
+    $resultset = $db->runQuery($query,'s',$bindings=[$code]);  	 
+	$db->close();	
+
+    return $resultset;
+}
+
 function getProducByIdFromDatabase($id){
 	$db = new ConnectionDatabase();
     $query = "SELECT * FROM productos WHERE id=?";
@@ -132,6 +142,46 @@ function saveProducFromDatabase($producto) {
     return $resultset;
 }
 
+function updateProducByStateFromDatabase($producto) {
+	
+    $resultset = [];
+    
+    if (
+        isset($producto->id, $producto->tipo_estado_id) &&
+        !empty(trim($producto->id)) &&
+        !empty(trim($producto->tipo_estado_id)) 
+    ) {
+        $id = trim($producto->id);	
+        $tipo_estado_id = !empty($producto->tipo_estado_id) ? $producto->tipo_estado_id : 1;
+        
+        $query = "UPDATE `productos` SET `tipo_estado_id`=? WHERE id=?";
+
+        $bindings = [$tipo_estado_id, $id];
+
+        $db = new ConnectionDatabase();
+        $db->initTransaction();
+        $db->getConnection()->autocommit(FALSE);
+        try {
+            if ($db->insert($query, 'dd', $bindings)) {                
+                $resultset = ["estado" => "200"];
+                $db->getConnection()->commit();
+            } else {
+                $db->getConnection()->rollback();
+                $resultset["estado"] = "404";
+                $resultset["info"] = "Es posible que el estado que quiere modificar no exista en la tabla tipo_estado.";
+            }
+        } catch (PDOException $e) {
+            echo "Error al modificar el estado del producto: " . $e->getMessage();
+        }
+        $db->close();
+
+    } else {
+        $resultset["estado"] = "404";
+    }
+
+    return $resultset; 
+}
+
 function updateProducFromDatabase($producto) {
 	
     $resultset = [];
@@ -139,8 +189,7 @@ function updateProducFromDatabase($producto) {
     if (
         isset($producto->id,$producto->nombre, $producto->descripcion) &&
         !empty(trim($producto->id)) &&
-        !empty(trim($producto->nombre)) &&
-        !empty(trim($producto->id))
+        !empty(trim($producto->nombre)) 
     ) {
         $id = trim($producto->id);	
         $nombre = trim($producto->nombre);

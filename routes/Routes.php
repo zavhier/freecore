@@ -12,7 +12,7 @@ function validateRoute($request){
 	$route = $split[2];
 	// siempre que se cree una nueva ruta la debemos agregar en esta seccion
     $rutaspermitidas = [ "auth","user", "userbyid", "socialreason", "socialreasonbyid", "socialreasonbyname",  "produc","producbyuser","productype",
-	                     "productstate","company","encryptpass","sendmail","dissolveuser", "userbyemail", "userbyphone","recoveruser"];
+	                     "productstate","company","encryptpass","sendmail","dissolveuser", "userbyemail", "userbyphone","recoveruser", "productbyqrcode", "producbystate"];
     $rutaspermitidas = array_map('strtolower', $rutaspermitidas);
     $route = strtolower($route);
     if(! in_array($route, $rutaspermitidas)){
@@ -50,6 +50,7 @@ function handleGetRequest($request,$token) {
 		$authorization = checkAuthToken($token);
 		
 		$split = (explode("/", $request));	
+		$url = $split[2];
 		$param = $split[3];	
 
 		if (strpos($request, '/api/user') !== false) {   
@@ -140,10 +141,16 @@ function handleGetRequest($request,$token) {
 			}	
 		}
 
+		if (strpos($request, '/api/productbyqrcode') !== false) {   
+
+			if($url == "productbyqrcode"){			
+				$response = getProducByQrCodeFromDatabase($param);
+				response::json($response);
+			}	
+		}
+		
 		if (strpos($request, '/api/company') !== false) {   
 
-			$split = (explode("/", $request));	
-			$url = $split[2];
 			if($url == "company"){
 				$authorization="";
 				$response = getCompanyFromDatabase();
@@ -222,12 +229,12 @@ function handlePostRequest($request,$token) {
 
 		if ($request === '/api/sendmail') {
 
-			if (validateAuthorization($token, $request, "sendmail")) {	
+			if($url == "sendmail"){	
 				$payload = file_get_contents('php://input'); 				
 				$params = json_decode($payload);
 
 				$response = SendMail($params);	
-				return response::json($response,$authorization);	  
+				return response::json($response);	  
 			}
 		}
 		
@@ -283,6 +290,16 @@ function handlePutRequest($request,$token) {
 				$payload = file_get_contents('php://input'); 
 				$params = json_decode($payload);
 				$response = updateProducFromDatabase($params);			
+				return response::json($response,$authorization);	  
+			}
+		}
+
+		if ($request === '/api/producbystate') {		
+
+			if (validateAuthorization($token, $request, "producbystate")) {	
+				$payload = file_get_contents('php://input'); 
+				$params = json_decode($payload);				
+				$response = updateProducByStateFromDatabase($params);			
 				return response::json($response,$authorization);	  
 			}
 		}
