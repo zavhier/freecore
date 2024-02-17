@@ -7,6 +7,888 @@
 	},
 	"item": [
 		{
+			"name": "Usuario Request",
+			"item": [
+				{
+					"name": "Usuario Obtener",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/user",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario por ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/userbyid/17",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"userbyid",
+								"17"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario por Email",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/userbyemail/zavhier@gmail.comx",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"userbyemail",
+								"zavhier@gmail.comx"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario por Celular",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"telcel\": \"555-123453\"\r\n}"
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/userbyphone",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"userbyphone"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario Guardar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"usuario de prueba nuevo XXX\",\r\n            \"email\": \"prueba@gmail.com\",\r\n            \"password\":\"prueba\",\r\n            \"rol\": \"user\",\r\n            \"fecha_alta\": \"2023-12-11 23:42:15\",\r\n            \"estado\": \"1\",\r\n            \"genero\": \"F\",\r\n            \"telcel\": \"555-123456\",\r\n            \"telref\": \"123-965874\",\r\n            \"urlimg\": \"\",\r\n            \"idempresa\": 1\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/user",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario Recuperar Contraseña",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "alvarez.leandro.a@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/recoveruser",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"recoveruser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario Modificar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n            \"id\": \"19\",\r\n            \"nombre\": \"Leandro\",\r\n            \"email\": \"alvarez.leandro.a@gmail.com\",\r\n            \"rol\": \"user\",\r\n            \"fecha_alta\": \"2024-02-14 23:42:15\",\r\n            \"estado\": \"1\",\r\n            \"genero\": \"M\",\r\n            \"telcel\": \"555-123456\",\r\n            \"telref\": \"123-965874\"\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/user",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario Disolver Definitivo",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/dissolveuser/11",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"dissolveuser",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Razon Social Request",
+			"item": [
+				{
+					"name": "Razon Social Obtener",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/socialreason",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"socialreason"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Razon Social Obtener por ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/socialreasonbyid/2",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"socialreasonbyid",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Razon Social Obtener por Nombre",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/socialreasonbyname/'Servicios Centrales, S.L'",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"socialreasonbyname",
+								"'Servicios Centrales, S.L'"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Razon Social Guardar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"El palmar S.A xx\",\r\n            \"direccion\": \"San Luis\",\r\n            \"telefono\":\"555-98765\",\r\n            \"correo\": \"user\",\r\n            \"fecha_creacion\": \"2023-12-11 23:42:15\",\r\n            \"urlimg\": null,\r\n            \"idusuario\": \"1\"\r\n        }"
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/socialreason",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"socialreason"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Razon Social Modificar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n            \"id\": \"13\",\r\n            \"nombre\": \"Code Hause S.A\",\r\n            \"direccion\": \"Córdoba\",\r\n            \"telefono\":\"555-98765\",\r\n            \"correo\": \"user\",\r\n            \"fecha_creacion\": \"2023-12-11 23:42:15\",\r\n            \"urlimg\": null,\r\n            \"idusuario\": \"1\"\r\n        }"
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/socialreason",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"socialreason"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Razon Social Borrar",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/socialreason/11",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"socialreason",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Productos Request",
+			"item": [
+				{
+					"name": "Producto Obtener",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/produc",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"produc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Producto Obtener por Id Usuario",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/producbyuser/17",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"producbyuser",
+								"17"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Producto Obtener por QR",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/productbyqrcode/b0529d0a",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"productbyqrcode",
+								"b0529d0a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Producto Obtener por Id Razon Social",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/productbysocialreason/1",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"productbysocialreason",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Producto Guardar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"Productos QR 3\",\r\n            \"descripcion\": \"Producto QR Freetags 3\",\r\n            \"fecha_creacion\": \"\",\r\n            \"codigo_qr\": \"d66eed33\",\r\n            \"url_qr\": \"www.freetags.com.ar/buscar/d66eed33\",\r\n            \"serial\": null,\r\n            \"razon_social_id\": \"1\",\r\n            \"usuario_id\": \"19\",\r\n            \"tipo_estado_id\": \"1\",\r\n            \"tipo_producto_id\": \"1\",\r\n            \"fecha_baja\": null,\r\n            \"urlimg\": \"/asset/img/\",\r\n            \"condicion\": \"3\"                   \r\n        }"
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/produc",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"produc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Producto Modificar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n            \"id\": \"19\",\r\n            \"nombre\": \"Actualizado P2\",\r\n            \"descripcion\": \"Lapto nueva\",\r\n            \"fecha_creacion\": \"2023-12-15\",\r\n            \"codigo_qr\": \"c://\",\r\n            \"url_qr\": null,\r\n            \"serial\": \"123443234432344\",\r\n            \"razon_social_id\": null,\r\n            \"usuario_id\": \"17\",\r\n            \"tipo_estado_id\": \"2\",\r\n            \"tipo_producto_id\": \"2\",\r\n            \"fecha_baja\": null,\r\n            \"urlimg\": \"/asset/img/\",\r\n            \"condicion\": \"1\"   \r\n        }"
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/produc",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"produc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Producto Modificar Estado",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n            \"id\": \"18\",\r\n            \"tipo_estado_id\": \"3\"   \r\n        }"
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/producbystate",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"producbystate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Producto Modificar Id usuario por QR",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n            \"codigo_qr\": \"b55370d4\",\r\n            \"usuario_id\": \"19\"   \r\n        }"
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/productbyqrcode",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"productbyqrcode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Producto Borrar",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/produc/16",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"produc",
+								"16"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pruebas varias",
+			"item": [
+				{
+					"name": "Autentificacion PRUEBA",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								},
+								{
+									"key": "company",
+									"value": "{{company}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/auth",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Autentificacion otro usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "leo@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "nnbq8",
+									"type": "text"
+								},
+								{
+									"key": "company",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/auth",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Autentificacion Generar Passw",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/encryptpass",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"encryptpass"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Autentificacion",
 			"request": {
 				"method": "POST",
@@ -44,805 +926,6 @@
 						"api",
 						"index.php",
 						"auth"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Autentificacion PRUEBA",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "username",
-							"value": "{{username}}",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "text"
-						},
-						{
-							"key": "company",
-							"value": "{{company}}",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/auth",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"auth"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Autentificacion otro usuario",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "username",
-							"value": "leo@gmail.com",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "nnbq8",
-							"type": "text"
-						},
-						{
-							"key": "company",
-							"value": "1",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/auth",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"auth"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Autentificacion Generar Passw",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/encryptpass",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"encryptpass"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Usuario Obtener",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/user",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Usuario Guardar",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"usuario de prueba nuevo XXX\",\r\n            \"email\": \"prueba@gmail.com\",\r\n            \"password\":\"prueba\",\r\n            \"rol\": \"user\",\r\n            \"fecha_alta\": \"2023-12-11 23:42:15\",\r\n            \"estado\": \"1\",\r\n            \"genero\": \"F\",\r\n            \"telcel\": \"555-123456\",\r\n            \"telref\": \"123-965874\",\r\n            \"urlimg\": \"\",\r\n            \"idempresa\": 1\r\n        }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/user",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Usuario Recuperar Contraseña",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "email",
-							"value": "alvarez.leandro.a@gmail.com",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/recoveruser",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"recoveruser"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Usuario Modificar",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "        {\r\n            \"id\": \"19\",\r\n            \"nombre\": \"Leandro\",\r\n            \"email\": \"alvarez.leandro.a@gmail.com\",\r\n            \"rol\": \"user\",\r\n            \"fecha_alta\": \"2024-02-14 23:42:15\",\r\n            \"estado\": \"1\",\r\n            \"genero\": \"M\",\r\n            \"telcel\": \"555-123456\",\r\n            \"telref\": \"123-965874\"\r\n        }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/user",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Usuario por ID",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/userbyid/17",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"userbyid",
-						"17"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Usuario por Email",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/userbyemail/zavhier@gmail.comx",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"userbyemail",
-						"zavhier@gmail.comx"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Usuario por Celular",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"telcel\": \"555-123453\"\r\n}"
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/userbyphone",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"userbyphone"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Usuario Disolver Definitivo",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/dissolveuser/11",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"dissolveuser",
-						"11"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Razon Social Guardar",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"El palmar S.A xx\",\r\n            \"direccion\": \"San Luis\",\r\n            \"telefono\":\"555-98765\",\r\n            \"correo\": \"user\",\r\n            \"fecha_creacion\": \"2023-12-11 23:42:15\",\r\n            \"urlimg\": null,\r\n            \"idusuario\": \"1\"\r\n        }"
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/socialreason",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"socialreason"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Razon Social Modificar",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "        {\r\n            \"id\": \"13\",\r\n            \"nombre\": \"Code Hause S.A\",\r\n            \"direccion\": \"Córdoba\",\r\n            \"telefono\":\"555-98765\",\r\n            \"correo\": \"user\",\r\n            \"fecha_creacion\": \"2023-12-11 23:42:15\",\r\n            \"urlimg\": null,\r\n            \"idusuario\": \"1\"\r\n        }"
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/socialreason",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"socialreason"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Razon Social Obtener",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/socialreason",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"socialreason"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Razon Social Obtener por ID",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/socialreasonbyid/2",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"socialreasonbyid",
-						"2"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Razon Social Obtener por Nombre",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/socialreasonbyname/'Servicios Centrales, S.L'",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"socialreasonbyname",
-						"'Servicios Centrales, S.L'"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Razon Social Borrar",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/socialreason/11",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"socialreason",
-						"11"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Producto Guardar",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"Nuevo Producto Notebook\",\r\n            \"descripcion\": \"Computadora personal\",\r\n            \"fecha_creacion\": \"\",\r\n            \"codigo_qr\": \"c://\",\r\n            \"url_qr\": null,\r\n            \"serial\": null,\r\n            \"razon_social_id\": \"1\",\r\n            \"usuario_id\": \"1\",\r\n            \"tipo_estado_id\": \"1\",\r\n            \"tipo_producto_id\": \"1\",\r\n            \"fecha_baja\": null,\r\n            \"urlimg\": \"/asset/img/\",\r\n            \"condicion\": \"1\"                   \r\n        }"
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/produc",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"produc"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Producto Obtener",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/produc",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"produc"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Producto Modificar",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "        {\r\n            \"id\": \"19\",\r\n            \"nombre\": \"Actualizado P2\",\r\n            \"descripcion\": \"Lapto nueva\",\r\n            \"fecha_creacion\": \"2023-12-15\",\r\n            \"codigo_qr\": \"c://\",\r\n            \"url_qr\": null,\r\n            \"serial\": \"123443234432344\",\r\n            \"razon_social_id\": null,\r\n            \"usuario_id\": \"17\",\r\n            \"tipo_estado_id\": \"2\",\r\n            \"tipo_producto_id\": \"2\",\r\n            \"fecha_baja\": null,\r\n            \"urlimg\": \"/asset/img/\",\r\n            \"condicion\": \"1\"   \r\n        }"
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/produc",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"produc"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Producto Modificar Estado",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "        {\r\n            \"id\": \"18\",\r\n            \"tipo_estado_id\": \"3\"   \r\n        }"
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/producbystate",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"producbystate"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Producto Borrar",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/produc/16",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"produc",
-						"16"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Producto por Usuario",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/producbyuser/17",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"producbyuser",
-						"17"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Producto por QR",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/productbyqrcode/AZJ132",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"productbyqrcode",
-						"AZJ132"
 					]
 				}
 			},
@@ -986,7 +1069,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwNzk2NTc3NSwicm9sIjoibWFuYWdlciJ9.mvacf0JgD/8263Ul/pJWnujHHY1ZwD0hgmPwiP0NkIY=",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwODE2NjkyOSwicm9sIjoibWFuYWdlciJ9.tE3H27cCgRTb7/HqeYPOkGuWyRLlSmaPv8n5eoMqdjo=",
 			"type": "string"
 		},
 		{

@@ -13,7 +13,7 @@ function validateRoute($request){
 	// siempre que se cree una nueva ruta la debemos agregar en esta seccion
     $rutaspermitidas = [ "auth","user", "userbyid", "dissolveuser", "userbyemail", "userbyphone","recoveruser",
 						 "socialreason", "socialreasonbyid", "socialreasonbyname",  
-						 "produc","producbyuser","productype","productstate","productbyqrcode", "producbystate","productbysocialreason",						 
+						 "produc","producbyuser","productype","productstate","productbyqrcode", "producbystate","productbysocialreason", 
 						 "company","encryptpass","sendmail",
 						];
 	$rutaspermitidas = array_map('strtolower', $rutaspermitidas);
@@ -311,6 +311,16 @@ function handlePutRequest($request,$token) {
 				$payload = file_get_contents('php://input'); 
 				$params = json_decode($payload);				
 				$response = updateProducByStateFromDatabase($params);			
+				return response::json($response,$authorization);	  
+			}
+		}
+
+		if ($request === '/api/productbyqrcode') {		
+
+			if (validateAuthorization($token, $request, "productbyqrcode")) {	
+				$payload = file_get_contents('php://input'); 
+				$params = json_decode($payload);				
+				$response = updateProducByQrCodeFromDatabase($params);			
 				return response::json($response,$authorization);	  
 			}
 		}
