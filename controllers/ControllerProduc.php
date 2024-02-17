@@ -11,6 +11,17 @@ function getProducAllFromDatabase(){
     return $resultset;
 }
 
+function getProducByIdSocialReasonFromDatabase($id){
+	$db = new ConnectionDatabase();
+    $query = "SELECT * FROM productos WHERE razon_social_id = ?";
+    $resultset = $db->runQuery($query,'d',$bindings=[$id]);  	 
+	$db->close();	
+
+    return $resultset;
+}
+
+// 1. devolver los datos del producto, del usuario, y razon social.
+// 2. siempre hay Producto, puede no existir Usuario o Razon Social.... ver tema de codigo errores.
 function getProducByQrCodeFromDatabase($code){
 	$db = new ConnectionDatabase();
     $query = "SELECT u.id,u.nombre, u.email, u.rol, u.fecha_alta, u.estado, u.genero, u.telcel, u.telref,u.urlimg,u.idempresa
@@ -24,7 +35,6 @@ function getProducByQrCodeFromDatabase($code){
 function getProducByIdFromDatabase($id){
 	$db = new ConnectionDatabase();
     $query = "SELECT * FROM productos WHERE id=?";
-    $resultset = $db->runBaseQuery($query);  	   
     $resultset = $db->runQuery($query,'d',$bindings=[$id]);  	 
 	$db->close();	
 
@@ -79,8 +89,8 @@ function saveProducFromDatabase($producto) {
     if (
         isset($producto->nombre, $producto->descripcion) &&
         !empty(trim($producto->nombre)) &&
-        !empty(trim($producto->descripcion)) &&
-        !empty(trim($producto->usuario_id))
+        !empty(trim($producto->descripcion)) 
+        // !empty(trim($producto->usuario_id))
     ) {   
         $nombre = trim($producto->nombre);
         $descripcion = trim($producto->descripcion);
@@ -90,7 +100,7 @@ function saveProducFromDatabase($producto) {
         $url_qr = !empty($producto->url_qr) ? $producto->url_qr : null; 
         $serial = !empty($producto->serial) ? $producto->serial : null; 
         $razon_social_id = !empty($producto->razon_social_id) ? $producto->razon_social_id : null; 
-        $usuario_id = trim($producto->usuario_id);
+        $usuario_id = trim($producto->usuario_id) ? $producto->usuario_id : null;
         $tipo_estado_id = !empty($producto->tipo_estado_id) ? $producto->tipo_estado_id : null;
         $tipo_producto_id = !empty($producto->tipo_producto_id) ? $producto->tipo_producto_id : null;
         $fecha_baja = !empty($producto->fecha_baja) ? $producto->fecha_baja : null;
@@ -181,6 +191,10 @@ function updateProducByStateFromDatabase($producto) {
 
     return $resultset; 
 }
+
+// MODIFICAR
+// Actualizar donde me pasas el codigo QR y lo que se actualiza es el ID de usuario (usuario_id).
+// updateProducFromDatabase()
 
 function updateProducFromDatabase($producto) {
 	

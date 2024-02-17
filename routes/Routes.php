@@ -11,9 +11,12 @@ function validateRoute($request){
 	$split = (explode("/", $request));	
 	$route = $split[2];
 	// siempre que se cree una nueva ruta la debemos agregar en esta seccion
-    $rutaspermitidas = [ "auth","user", "userbyid", "socialreason", "socialreasonbyid", "socialreasonbyname",  "produc","producbyuser","productype",
-	                     "productstate","company","encryptpass","sendmail","dissolveuser", "userbyemail", "userbyphone","recoveruser", "productbyqrcode", "producbystate"];
-    $rutaspermitidas = array_map('strtolower', $rutaspermitidas);
+    $rutaspermitidas = [ "auth","user", "userbyid", "dissolveuser", "userbyemail", "userbyphone","recoveruser",
+						 "socialreason", "socialreasonbyid", "socialreasonbyname",  
+						 "produc","producbyuser","productype","productstate","productbyqrcode", "producbystate","productbysocialreason",						 
+						 "company","encryptpass","sendmail",
+						];
+	$rutaspermitidas = array_map('strtolower', $rutaspermitidas);
     $route = strtolower($route);
     if(! in_array($route, $rutaspermitidas)){
 		return false;
@@ -149,6 +152,14 @@ function handleGetRequest($request,$token) {
 			}	
 		}
 		
+		if (strpos($request, '/api/productbysocialreason') !== false) {   
+
+			if (validateAuthorization($token, $request, "productbysocialreason")) {				
+				$response = getProducByIdSocialReasonFromDatabase($param);
+				response::json($response,$authorization);
+			}	
+		}
+
 		if (strpos($request, '/api/company') !== false) {   
 
 			if($url == "company"){
