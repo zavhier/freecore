@@ -7,7 +7,8 @@ function getUsersAuthenticate($email,$pass, $idempresa){
 
     $user = array();    
     $db = new ConnectionDatabase();
-    $query = "SELECT * FROM usuarios WHERE (email = ? AND idempresa = ?)";
+    //$query = "SELECT * FROM usuarios WHERE (email = ? AND idempresa = ?)";
+    $query = "SELECT u.*, IFNULL(urs.razon_social_id, 0) AS razon_social FROM usuarios u LEFT JOIN usuarios_razon_social urs ON u.id = urs.usuario_id WHERE u.email = ? AND u.idempresa = ?";
 
     $resultset = $db->runQuery($query,'ss',$param_value_array=[$email, $idempresa]);   	
 
@@ -18,6 +19,11 @@ function getUsersAuthenticate($email,$pass, $idempresa){
         $user["idusuario"]=$resultset[0]['id']; 
 		$user["idempresa"]=$resultset[0]['idempresa']; 
         $user["rol"]=$resultset[0]['rol']; 
+        $razon_social='';
+        for ($i = 0; $i < count($resultset); $i++) {
+            $razon_social.=$resultset[$i]['razon_social'] . " ";
+        }
+        $user["razon_social"]=$razon_social;         
     }else{
 		$user["mensaje"]='Usuario no autentificado';
 		if(!isset($idempresa)){
