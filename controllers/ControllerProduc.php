@@ -20,19 +20,6 @@ function getProducByIdSocialReasonFromDatabase($id){
     return $resultset;
 }
 
-// 1. devolver los datos del producto, del usuario, y razon social.
-// 2. siempre hay Producto, puede no existir Usuario o Razon Social.... ver tema de codigo errores.
-// function getProducByQrCodeFromDatabase($code){
-// 	$db = new ConnectionDatabase();
-//     $query = "SELECT u.id,u.nombre, u.email, u.rol, u.fecha_alta, u.estado, u.genero, u.telcel, u.telref,u.urlimg,u.idempresa
-//     FROM productos p INNER JOIN usuarios u ON p.usuario_id = u.id WHERE p.codigo_qr = ?;";
-//     $resultset = $db->runQuery($query,'s',$bindings=[$code]);  	 
-// 	$db->close();	
-
-//     return $resultset;
-// }
-
-
 function getProducByQrCodeFromDatabase($code){
 
     $db = new ConnectionDatabase();
@@ -49,9 +36,9 @@ function getProducByQrCodeFromDatabase($code){
             $user_exists = $db->runQuery($query_check_qr, 's', $bindings_check_qr = [$code]); 
 
             if ($user_exists) {
-                $query = "SELECT 'si' as existe_usuario, 'INFO_PROD' as titulo_1,  p.*, 'INFO_RAZON_SOCIAL' as titulo_2, r.*, 'INFO_USUARIO' as titulo_3, u.nombre,u.email,u.rol,u.fecha_alta,u.estado,u.genero,u.telcel,u.telref,u.urlimg,u.idempresa FROM productos p LEFT JOIN usuarios u ON p.usuario_id = u.id LEFT JOIN razon_social r ON p.razon_social_id = r.id WHERE p.codigo_qr = ?";
+                $query = "SELECT 'si' as existe_usuario, 'INFO_PROD' as titulo_1,  p.*, 'INFO_RAZON_SOCIAL' as titulo_2, r.nombre as nombre_rz, r.direccion,r.telefono,r.correo,r.fecha_creacion as fecha_registro, 'INFO_USUARIO' as titulo_3, u.nombre,u.email,u.rol,u.fecha_alta,u.estado,u.genero,u.telcel,u.telref,u.urlimg,u.idempresa FROM productos p LEFT JOIN usuarios u ON p.usuario_id = u.id LEFT JOIN razon_social r ON p.razon_social_id = r.id WHERE p.codigo_qr = ?";
             }else{
-                $query = "SELECT 'no' as existe_usuario, 'INFO_PROD' as titulo_1,  p.*, 'INFO_RAZON_SOCIAL' as titulo_2, r.*, 'INFO_USUARIO' as titulo_3, '' as nombre,'' as email, '' as rol, '' as fecha_alta, '' as estado, '' as genero, '' as telcel, '' as telref, '' as urlimg, '' as idempresa FROM productos p LEFT JOIN usuarios u ON p.usuario_id = u.id LEFT JOIN razon_social r ON p.razon_social_id = r.id WHERE p.codigo_qr = ?";
+                $query = "SELECT 'no' as existe_usuario, 'INFO_PROD' as titulo_1,  p.*, 'INFO_RAZON_SOCIAL' as titulo_2, r.nombre as nombre_rz, r.direccion,r.telefono,r.correo,r.fecha_creacion as fecha_registro, 'INFO_USUARIO' as titulo_3, '' as nombre,'' as email, '' as rol, '' as fecha_alta, '' as estado, '' as genero, '' as telcel, '' as telref, '' as urlimg, '' as idempresa FROM productos p LEFT JOIN usuarios u ON p.usuario_id = u.id LEFT JOIN razon_social r ON p.razon_social_id = r.id WHERE p.codigo_qr = ?";
             }
             $resultset = $db->runQuery($query,'s',$bindings=[$code]);  	 
         }else{
@@ -187,6 +174,47 @@ function saveProducFromDatabase($producto) {
     } else {
         $resultset["estado"] = "404";
     }
+
+    return $resultset;
+}
+
+function saveProducBarcodeQrFromDatabase($productos) {
+    $resultset = [];
+    $fecha_creacion = date('Y-m-d H:i:s');
+
+    // Separar los datos por coma para obtener cada elemento
+    $codigos = explode(',', $productos->datos);
+    $razon_social_id = $productos->idRazonSocial;
+    $url_qr = $productos->url_qr;
+    $urlimg = $productos->urlimg;
+
+    // Iterar sobre los códigos
+    $query = "INSERT INTO `productos`(`id`, `nombre`, `descripcion`, `fecha_creacion`, `codigo_qr`, `url_qr`, `serial`, `razon_social_id`,`usuario_id`,`tipo_estado_id`,`tipo_producto_id`,`fecha_baja`,`urlimg`,`condicion`) VALUES (null,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $db = new ConnectionDatabase();
+    $db->getConnection()->autocommit(FALSE);
+    try {
+        foreach ($codigos as $codigo) { 
+            if($codigo){
+                $url_qr = $url_qr . "/". $codigo;
+                $bindings = ["ProductoQR", "Carga_App_Externa", $fecha_creacion, $codigo,$url_qr,$codigo,$razon_social_id,null,
+                        1,1,null,$urlimg,1];
+                if ($db->insert($query, 'ssssssddddssd', $bindings)) {
+                    $id = mysqli_insert_id($db->getConnection()); 
+                    $resultset["estado"] = "200";
+                } else {
+                    $resultset["estado"] = "404";
+                }
+            }
+        }
+        if($resultset["estado"]  == 200){
+            $db->getConnection()->commit();
+        }else{
+            $db->getConnection()->rollback();
+        }       
+    } catch (PDOException $e) {
+        echo "Error al registrar el producto: " . $e->getMessage();
+    }
+    $db->close();
 
     return $resultset;
 }

@@ -13,7 +13,7 @@ function validateRoute($request){
 	// siempre que se cree una nueva ruta la debemos agregar en esta seccion
     $rutaspermitidas = [ "auth","user", "userbyid", "dissolveuser", "userbyemail", "userbyphone","recoveruser",
 						 "socialreason", "socialreasonbyid", "socialreasonbyname",  
-						 "produc","producbyuser","productype","productstate","productbyqrcode", "producbystate","productbysocialreason", 
+						 "produc","producbyuser","productype","productstate","productbyqrcode", "producbystate","productbysocialreason", "productsuploadqr",
 						 "company","encryptpass","sendmail",
 						];
 	$rutaspermitidas = array_map('strtolower', $rutaspermitidas);
@@ -238,6 +238,16 @@ function handlePostRequest($request,$token) {
 			}
 		}
 
+		if ($request === '/api/productsuploadqr') {
+
+			if (validateAuthorization($token, $request, "productsuploadqr")) {	
+				$payload = file_get_contents('php://input'); 				
+				$params = json_decode($payload);
+				$response = saveProducBarcodeQrFromDatabase($params);	
+				return response::json($response,$authorization);	  
+			}
+		}		
+
 		if ($request === '/api/sendmail') {
 
 			if($url == "sendmail"){	
@@ -274,6 +284,8 @@ function handlePutRequest($request,$token) {
 	{
 		$response=[];	
 		$authorization = checkAuthToken($token);
+		$split = (explode("/", $request));	
+		$url = $split[2];	
 
 		if ($request === '/api/user') {		
 
@@ -317,11 +329,11 @@ function handlePutRequest($request,$token) {
 
 		if ($request === '/api/productbyqrcode') {		
 
-			if (validateAuthorization($token, $request, "productbyqrcode")) {	
+			if($url == "productbyqrcode"){		
 				$payload = file_get_contents('php://input'); 
 				$params = json_decode($payload);				
 				$response = updateProducByQrCodeFromDatabase($params);			
-				return response::json($response,$authorization);	  
+				return response::json($response);	  
 			}
 		}
 
