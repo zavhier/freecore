@@ -49,6 +49,15 @@ class template {
                             margin-top: 20px;
                             color: #777;
                         }
+
+                        .map-link {
+                            display: inline-block;
+                            padding: 10px 20px;
+                            background-color: #5bc0de; /* Color celeste */
+                            color: #fff; /* Color del texto */
+                            text-decoration: none; /* Eliminar subrayado del enlace */
+                            border-radius: 5px; /* Bordes redondeados */
+                          }                        
                    </style>		
 		';
 	}	
@@ -95,11 +104,18 @@ class template {
 	
 	// ******************************************************************
 	
-	public static function emailPointContactTemplate($subject,$name,$message){
+	public static function emailPointContactTemplate($subject,$name,$message,$link){
 					
-		 $date = date('Y-m-d H:i:s');
+		  $date = date('Y-m-d H:i:s');
 		
 		  $styleTemplate = self::myStileTemplate();
+                    
+          if(!empty(trim($link))){
+            // URL de la API de Google Static Maps
+            $linkurl = '<a href="'.$link.'" class="map-link" target="_blank">Acceder a la ubicación en el mapa</a>';
+          }else{
+            $linkurl = '';  
+          }         
 
            return '
                 <html lang="es">
@@ -113,8 +129,9 @@ class template {
                     <div class="container">
 	                    <h1>'. $subject .'</h1>
                         <p>Hola '.$name.',</p>
-                        <p>'. $message .'</p>
-                        <p><p>Fecha de actualización: '.$date.'</p></p>
+                        <p>'. $message .'</p>'
+                        .$linkurl.
+                        '<p>Fecha: '.$date.'</p>
                         <p class="footer">¡Gracias!</p>
                     </div>
                 </body>

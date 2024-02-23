@@ -27,7 +27,13 @@ function SendMail($email){
             $asunto  = isset($email->asunto) ? trim($email->asunto) : '';
         }
         		
-		$mensaje = template::emailPointContactTemplate($asunto,$email->nombre, $email->mensaje);	
+        if(!empty(trim($email->link))){
+            $link = trim($email->link);
+        }else{
+            $link = "null";
+        }
+        
+		$mensaje = template::emailPointContactTemplate($asunto,$email->nombre, $email->mensaje, $link);	
 		       
         $header  = 'From: ' . $De . " \r\n"; 
         $header .= "X-Mailer: PHP/" . phpversion() . " \r\n"; 
