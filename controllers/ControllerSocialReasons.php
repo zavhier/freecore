@@ -46,18 +46,19 @@ function saveSocialReasonFromDatabase($razonsocial){
     ) {
         $fecha_creacion = date('Y-m-d H:i:s');
         $urlimg = !empty($razonsocial->urlimg) ? $razonsocial->urlimg : null;
+        $color = !empty($razonsocial->color) ? $razonsocial->color : null;
         
-        $query = "INSERT INTO `razon_social`(`id`, `nombre`, `direccion`, `telefono`, `correo`, `fecha_creacion`, `urlimg`)
-                  VALUES (null,?,?,?,?,?,?)";
+        $query = "INSERT INTO `razon_social`(`id`, `nombre`, `direccion`, `telefono`, `correo`, `fecha_creacion`, `urlimg`, `color`)
+                  VALUES (null,?,?,?,?,?,?,?)";
 
         $bindings = [
-            $razonsocial->nombre, $razonsocial->direccion, $razonsocial->telefono,  $razonsocial->correo, $fecha_creacion, $urlimg
+            $razonsocial->nombre, $razonsocial->direccion, $razonsocial->telefono,  $razonsocial->correo, $fecha_creacion, $urlimg,$color
         ];
 
         $db = new ConnectionDatabase();
         $db->getConnection()->autocommit(FALSE);
         try {        
-            if ($db->insert($query, 'ssssss', $bindings)) {         
+            if ($db->insert($query, 'sssssss', $bindings)) {         
                 // capturo el ultimo id insertado en la entidad razon_social       
                 $id = mysqli_insert_id($db->getConnection());
 
@@ -72,6 +73,7 @@ function saveSocialReasonFromDatabase($razonsocial){
                         "correo" => $razonsocial->correo,
                         "fecha_creacion" => $fecha_creacion,
                         "urlimg" => $urlimg,
+                        "color" => $color,
                         "estado" => "200"
                     ];
                     $db->getConnection()->commit();
@@ -111,17 +113,18 @@ function updateSocialReasonFromDatabase($razonsocial){
         $telefono = trim($razonsocial->telefono);
         $fecha_creacion = !empty($razonsocial->fecha_creacion) ? $razonsocial->fecha_creacion : date('Y-m-d H:i:s');
         $urlimg = !empty($razonsocial->urlimg) ? $razonsocial->urlimg : null;
+        $color = !empty($razonsocial->color) ? $razonsocial->color : null;
 
-		$query = "UPDATE `razon_social` SET `nombre`=?,`direccion`=?,`telefono`=?,`correo`=?,`fecha_creacion`=?,`urlimg`=? WHERE `id` = ?";	
+		$query = "UPDATE `razon_social` SET `nombre`=?,`direccion`=?,`telefono`=?,`correo`=?,`fecha_creacion`=?,`urlimg`=?,`color`=? WHERE `id` = ?";	
 
         $bindings = [
-            $nombre, $direccion, $telefono, $correo, $fecha_creacion, $urlimg, $id
+            $nombre, $direccion, $telefono, $correo, $fecha_creacion, $urlimg, $color, $id
         ];
 
 		$db = new ConnectionDatabase();
         $db->getConnection()->autocommit(FALSE);
         try {
-            if ($db->insert($query, 'ssssssd', $bindings)) {                			
+            if ($db->insert($query, 'sssssssd', $bindings)) {                			
                 $resultset = [
                     "id" => $id,
                     "nombre" => $nombre,
@@ -130,6 +133,7 @@ function updateSocialReasonFromDatabase($razonsocial){
                     "correo" => $correo,
                     "fecha_creacion" => $fecha_creacion,
                     "urlimg" => $urlimg,
+                    "color" => $color,
                     "estado" => "200"
                 ];
                 $db->getConnection()->commit();

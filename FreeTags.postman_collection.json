@@ -388,7 +388,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"El palmar S.A xx\",\r\n            \"direccion\": \"San Luis\",\r\n            \"telefono\":\"555-98765\",\r\n            \"correo\": \"user\",\r\n            \"fecha_creacion\": \"2023-12-11 23:42:15\",\r\n            \"urlimg\": null,\r\n            \"idusuario\": \"1\"\r\n        }"
+							"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"El palmar S.A xx\",\r\n            \"direccion\": \"San Luis\",\r\n            \"telefono\":\"555-98765\",\r\n            \"correo\": \"user\",\r\n            \"fecha_creacion\": \"2023-12-11 23:42:15\",\r\n            \"urlimg\": null,\r\n            \"color\": null,\r\n            \"idusuario\": \"1\"\r\n        }"
 						},
 						"url": {
 							"raw": "https://freetags.mysite.com.ar/api/index.php/socialreason",
@@ -421,7 +421,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "        {\r\n            \"id\": \"13\",\r\n            \"nombre\": \"Code Hause S.A\",\r\n            \"direccion\": \"Córdoba\",\r\n            \"telefono\":\"555-98765\",\r\n            \"correo\": \"user\",\r\n            \"fecha_creacion\": \"2023-12-11 23:42:15\",\r\n            \"urlimg\": null,\r\n            \"idusuario\": \"1\"\r\n        }"
+							"raw": "        {\r\n            \"id\": \"18\",\r\n            \"nombre\": \"Code Hause S.A\",\r\n            \"direccion\": \"Córdoba\",\r\n            \"telefono\":\"555-98765\",\r\n            \"correo\": \"user\",\r\n            \"fecha_creacion\": \"2023-12-11 23:42:15\",\r\n            \"urlimg\": null,\r\n            \"color\": null,\r\n            \"idusuario\": \"1\"\r\n        }"
 						},
 						"url": {
 							"raw": "https://freetags.mysite.com.ar/api/index.php/socialreason",
@@ -707,7 +707,8 @@
 							{
 								"key": "Authorization",
 								"value": "{{token}}",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -777,17 +778,17 @@
 							"formdata": [
 								{
 									"key": "username",
-									"value": "{{username}}",
+									"value": "mapfre@gmail.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "{{password}}",
+									"value": "1234",
 									"type": "text"
 								},
 								{
 									"key": "company",
-									"value": "{{company}}",
+									"value": "1",
 									"type": "text"
 								}
 							]
@@ -939,12 +940,13 @@
 					{
 						"key": "Authorization",
 						"value": "{{token}}",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "        {\r\n            \"asunto\": \"Asunto personalizado prueba\",\r\n            \"nombre\": \"Laura Soledad Nuñes\",\r\n            \"correo\": \"alvarez.leandro.a@gmail.com\",\r\n            \"tipoenvio\":\"3\",\r\n            \"mensaje\": \"Otros datos que necesitemos informar\"\r\n        }"
+					"raw": "        {\r\n            \"asunto\": \"Asunto personalizado prueba\",\r\n            \"nombre\": \"Laura Soledad Nuñes\",\r\n            \"correo\": \"alvarez.leandro.a@gmail.com\",\r\n            \"tipoenvio\":\"3\",\r\n            \"mensaje\": \"Otros datos que necesitemos informar\",\r\n            \"link\": \"https://www.google.com/maps/dir//-34.5046279,-58.8133809\"\r\n        }"
 				},
 				"url": {
 					"raw": "https://freetags.mysite.com.ar/api/index.php/sendmail",
@@ -1069,7 +1071,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwODE2NjkyOSwicm9sIjoibWFuYWdlciJ9.tE3H27cCgRTb7/HqeYPOkGuWyRLlSmaPv8n5eoMqdjo=",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwODc1NjE3NCwicm9sIjoibWFuYWdlciJ9.Okt8em4LjCye2W3RRfloKywAIxhcrjYFcE/wzVAjclQ=",
 			"type": "string"
 		},
 		{
