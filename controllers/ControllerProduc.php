@@ -182,42 +182,54 @@ function saveProducBarcodeQrFromDatabase($productos) {
     $resultset = [];
     $fecha_creacion = date('Y-m-d H:i:s');
 
-    // Separar los datos por coma para obtener cada elemento
-    $codigos = explode(',', $productos->datos);
+    // Separo los datos por coma para obtener cada elemento
+    // $productos es una cadena de codigos qr separadas por ,. 
+    $codigos = rtrim($productos->datos, ',');
+    $codigos = explode(',', $codigos);
+
     $razon_social_id = $productos->idRazonSocial;
     $url_qr = $productos->url_qr;
     $urlimg = $productos->urlimg;
-
-    // Iterar sobre los códigos
-    $query = "INSERT INTO `productos`(`id`, `nombre`, `descripcion`, `fecha_creacion`, `codigo_qr`, `url_qr`, `serial`, `razon_social_id`,`usuario_id`,`tipo_estado_id`,`tipo_producto_id`,`fecha_baja`,`urlimg`,`condicion`) VALUES (null,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    
     $db = new ConnectionDatabase();
     $db->getConnection()->autocommit(FALSE);
-    try {
-        foreach ($codigos as $codigo) { 
-            if($codigo){
-                $url_qr = $url_qr . "/". $codigo;
-                $bindings = ["ProductoQR", "Carga_App_Externa", $fecha_creacion, $codigo,$url_qr,$codigo,$razon_social_id,null,
-                        1,1,null,$urlimg,1];
-                if ($db->insert($query, 'ssssssddddssd', $bindings)) {
-                    $id = mysqli_insert_id($db->getConnection()); 
-                    $resultset["estado"] = "200";
-                } else {
-                    $resultset["estado"] = "404";
-                }
-            }
-        }
-        if($resultset["estado"]  == 200){
-            $db->getConnection()->commit();
-        }else{
-            $db->getConnection()->rollback();
-        }       
-    } catch (PDOException $e) {
-        echo "Error al registrar el producto: " . $e->getMessage();
-    }
-    $db->close();
 
+    // Crear la consulta SQL para la inserción por lote.
+    $query = "INSERT INTO `productos`(`id`, `nombre`, `descripcion`, `fecha_creacion`, `codigo_qr`, `url_qr`, `serial`, `razon_social_id`,`usuario_id`,`tipo_estado_id`,`tipo_producto_id`,`fecha_baja`,`urlimg`,`condicion`) VALUES ";
+    $values = []; 
+
+    // Bucle para realizar inserciones en lotes donde
+    // construyo las cadenas de valores y los bindings que necesito.
+    foreach ($codigos as $codigo) {
+        $codigo = fillSpace($codigo);
+        if ($codigo) {
+            $values[] = "(null, 'ProductoQR', 'Carga_App_Externa', '$fecha_creacion', '$codigo', '$url_qr/$codigo', '$codigo', '$razon_social_id', null, 1, 1, null, '$urlimg', 1)";
+        }
+    }
+
+    // Combino los valores en una sola cadena separada por comas
+    $valuesString = implode(", ", $values);
+
+    // Combino la consulta SQL con los valores
+    $query .= $valuesString;
+
+    try {
+        if ($db->getConnection()->query($query)) {
+            $db->getConnection()->commit();
+            $resultset["estado"] = "200";
+        } else {
+            $db->getConnection()->rollback();
+            $resultset["estado"] = "404";
+        }        
+    } catch (PDOException $e) {
+        $resultset["info"] = "saveProducBarcodeQrFromDatabase Error: al registrar el producto " . $e->getMessage();
+        $resultset["estado"] = "404";        
+    }
+
+    $db->close();
     return $resultset;
 }
+
 
 function updateProducByStateFromDatabase($producto) {
 	
@@ -411,4 +423,10 @@ function removeProducFromDatabase($id){
     }
 	
 	return $resultset;   
+}
+
+// Reemplazar los espacios vacíos con una cadena vacía
+function fillSpace($inputString) {    
+    $outputString = str_replace(' ', '', $inputString);
+    return $outputString;
 }
