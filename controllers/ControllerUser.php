@@ -22,10 +22,9 @@ function getUserByIdFromDatabase($param){
     return $resultset;
 }
 
-function getUserByEmailFromDatabase($param){
+function checkExistUserByEmailFromDatabase($param){
 	$db = new ConnectionDatabase();
-    $query = "SELECT id, nombre, email, rol, fecha_alta, estado, genero, telcel, telref, urlimg FROM usuarios WHERE email=?";
-    //$param = str_replace("x", "", $param);
+    $query = "SELECT IFNULL((SELECT 1 FROM usuarios WHERE email = ? ), 0) AS existe";
     $posicionUltima = strrpos($param, "x");
     if ($posicionUltima !== false) {
         // Reemplazar la última ocurrencia del carácter

@@ -47,7 +47,7 @@ function saveSocialReasonFromDatabase($razonsocial){
         $fecha_creacion = date('Y-m-d H:i:s');
         $urlimg = !empty($razonsocial->urlimg) ? $razonsocial->urlimg : null;
         $color = !empty($razonsocial->color) ? $razonsocial->color : null;
-        
+
         $query = "INSERT INTO `razon_social`(`id`, `nombre`, `direccion`, `telefono`, `correo`, `fecha_creacion`, `urlimg`, `color`)
                   VALUES (null,?,?,?,?,?,?,?)";
 
@@ -79,9 +79,11 @@ function saveSocialReasonFromDatabase($razonsocial){
                     $db->getConnection()->commit();
                 }else{
                     $resultset["estado"] = "404";    
+                    $resultset["info"] = "Error al intentar insertar un registro en la tabla usuarios_razon_social.";
                 }
             } else {
                 $resultset["estado"] = "404";
+                $resultset["info"] = "Error al intentar insertar un registro en la tabla razon_social.";
             }
         } catch (PDOException $e) {
             echo "Error al crear razon social: " . $e->getMessage();
@@ -89,6 +91,7 @@ function saveSocialReasonFromDatabase($razonsocial){
         $db->close();
     } else {
         $resultset["estado"] = "404";
+        $resultset["info"] = "Error al intentar crear una razon social. Existe problemas con los atributos.";
     }
 
     return $resultset;

@@ -99,6 +99,37 @@
 					"response": []
 				},
 				{
+					"name": "Usuario Chequear por Mail",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/checkexistuser/zavhier@gmail.comx",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"checkexistuser",
+								"zavhier@gmail.comx"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Usuario por Celular",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -388,7 +419,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"El palmar S.A xx\",\r\n            \"direccion\": \"San Luis\",\r\n            \"telefono\":\"555-98765\",\r\n            \"correo\": \"user\",\r\n            \"fecha_creacion\": \"2023-12-11 23:42:15\",\r\n            \"urlimg\": null,\r\n            \"color\": null,\r\n            \"idusuario\": \"1\"\r\n        }"
+							"raw": "        {\r\n            \"id\": \"\",\r\n            \"nombre\": \"El palmar S.A xx\",\r\n            \"direccion\": \"San Luis\",\r\n            \"telefono\":\"555-98765\",\r\n            \"correo\": \"user\",\r\n            \"fecha_creacion\": \"2023-12-11 23:42:15\",\r\n            \"urlimg\": null,\r\n            \"color\": null,\r\n            \"idusuario\": \"103\"\r\n        }"
 						},
 						"url": {
 							"raw": "https://freetags.mysite.com.ar/api/index.php/socialreason",
@@ -421,7 +452,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "        {\r\n            \"id\": \"18\",\r\n            \"nombre\": \"Code Hause S.A\",\r\n            \"direccion\": \"Córdoba\",\r\n            \"telefono\":\"555-98765\",\r\n            \"correo\": \"user\",\r\n            \"fecha_creacion\": \"2023-12-11 23:42:15\",\r\n            \"urlimg\": null,\r\n            \"color\": null,\r\n            \"idusuario\": \"1\"\r\n        }"
+							"raw": "        {\r\n            \"id\": \"23\",\r\n            \"nombre\": \"Code Hause S.A\",\r\n            \"direccion\": \"Córdoba\",\r\n            \"telefono\":\"555-98765\",\r\n            \"correo\": \"user\",\r\n            \"fecha_creacion\": \"2023-12-11 23:42:15\",\r\n            \"urlimg\": null,\r\n            \"color\": \"null\",\r\n            \"idusuario\": \"1\"\r\n        }"
 						},
 						"url": {
 							"raw": "https://freetags.mysite.com.ar/api/index.php/socialreason",
@@ -1071,7 +1102,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwODc1NjE3NCwicm9sIjoibWFuYWdlciJ9.Okt8em4LjCye2W3RRfloKywAIxhcrjYFcE/wzVAjclQ=",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwOTE5NzczNSwicm9sIjoibWFuYWdlciJ9.g+auVIeF8AiX7F+vVEg50mqqaKpy4M5LK6UdFfYdpEI=",
 			"type": "string"
 		},
 		{

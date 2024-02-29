@@ -11,7 +11,7 @@ function validateRoute($request){
 	$split = (explode("/", $request));	
 	$route = $split[2];
 	// siempre que se cree una nueva ruta la debemos agregar en esta seccion
-    $rutaspermitidas = [ "auth","user", "userbyid", "dissolveuser", "userbyemail", "userbyphone","recoveruser",
+    $rutaspermitidas = [ "auth","user", "userbyid", "dissolveuser", "userbyemail", "userbyphone","recoveruser","checkexistuser",
 						 "socialreason", "socialreasonbyid", "socialreasonbyname",  
 						 "produc","producbyuser","productype","productstate","productbyqrcode", "producbystate","productbysocialreason", "productsuploadqr",
 						 "company","encryptpass","sendmail",
@@ -79,6 +79,14 @@ function handleGetRequest($request,$token) {
 				response::json($response,$authorization);
 			}
 		}
+
+		if (strpos($request, '/api/checkexistuser') !== false) {   
+
+			if($url == "checkexistuser"){	
+				$response = checkExistUserByEmailFromDatabase($param);	
+				response::json($response);
+			}
+		}		
 
 		if (strpos($request, '/api/userbyphone') !== false) {   
 
