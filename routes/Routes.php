@@ -11,7 +11,7 @@ function validateRoute($request){
 	$split = (explode("/", $request));	
 	$route = $split[2];
 	// siempre que se cree una nueva ruta la debemos agregar en esta seccion
-    $rutaspermitidas = [ "auth","user", "userbyid", "dissolveuser", "userbyemail", "userbyphone","recoveruser","checkexistuser",
+    $rutaspermitidas = [ "auth","user", "userbyid", "dissolveuser", "userbyemail", "userbyphone","recoveruser","checkexistsuser",
 						 "socialreason", "socialreasonbyid", "socialreasonbyname",  
 						 "produc","producbyuser","productype","productstate","productbyqrcode", "producbystate","productbysocialreason", "productsuploadqr",
 						 "company","encryptpass","sendmail",
@@ -71,22 +71,6 @@ function handleGetRequest($request,$token) {
 				response::json($response,$authorization);
 			}
 		}	
-
-		if (strpos($request, '/api/userbyemail') !== false) {   
-
-			if (validateAuthorization($token, $request, "userbyemail")) {
-				$response = getUserByEmailFromDatabase($param);	
-				response::json($response,$authorization);
-			}
-		}
-
-		if (strpos($request, '/api/checkexistuser') !== false) {   
-
-			if($url == "checkexistuser"){	
-				$response = checkExistUserByEmailFromDatabase($param);	
-				response::json($response);
-			}
-		}		
 
 		if (strpos($request, '/api/userbyphone') !== false) {   
 
@@ -207,14 +191,14 @@ function handlePostRequest($request,$token) {
 			}
 		}	
 
-		if ($request === '/api/encryptpass') {	
+		// if ($request === '/api/encryptpass') {	
 
-			if($url == "encryptpass"){
-				$pass = $_POST['password'];
-				$response = getPasswordEncrypt($pass);
-				return response::json($response);	  
-			}
-		}		
+		// 	if($url == "encryptpass"){
+		// 		$pass = $_POST['password'];
+		// 		$response = getPasswordEncrypt($pass);
+		// 		return response::json($response);	  
+		// 	}
+		// }		
 
 		if ($request === '/api/user') {
 			
@@ -225,6 +209,26 @@ function handlePostRequest($request,$token) {
 				return response::json($response);	  
 			}
 		}		
+
+		if (strpos($request, '/api/checkexistsuser') !== false) {   
+
+			if($url == "checkexistsuser"){	
+				$payload = file_get_contents('php://input'); 				
+				$params = json_decode($payload);				
+				$response = checkexistsuserByEmailFromDatabase($params);	
+				response::json($response);
+			}
+		}
+
+		if (strpos($request, '/api/userbyemail') !== false) {   
+
+			if (validateAuthorization($token, $request, "userbyemail")) {
+				$payload = file_get_contents('php://input'); 				
+				$params = json_decode($payload);					
+				$response = getUserByEmailFromDatabase($params);	
+				response::json($response,$authorization);
+			}
+		}
 
 		if ($request === '/api/socialreason') {
 

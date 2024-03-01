@@ -7,7 +7,11 @@ require_once './templates.php';
 function getUsersAllFromDatabase(){
 	$db = new ConnectionDatabase();
     $query = "SELECT id, nombre, email, rol, fecha_alta, estado, genero, telcel, telref, urlimg FROM usuarios";
-    $resultset = $db->runBaseQuery($query);  	   
+    try {
+        $resultset = $db->runBaseQuery($query);  	   
+    } catch (PDOException $e) {
+        echo "Error al ejecutar consulta para obtener todos los usuarios: " . $e->getMessage();
+    }      
 	$db->close();	
 
     return $resultset;
@@ -16,22 +20,54 @@ function getUsersAllFromDatabase(){
 function getUserByIdFromDatabase($param){
 	$db = new ConnectionDatabase();
     $query = "SELECT id, nombre, email, rol, fecha_alta, estado, genero, telcel, telref, urlimg FROM usuarios WHERE id=?";
-    $resultset = $db->runQuery($query,'d',$bindings=[$param]);  	 
+    try {
+        $resultset = $db->runQuery($query,'d',$bindings=[$param]);  	 
+    } catch (PDOException $e) {
+        echo "Error al ejecutar consulta para obtener un usario por ID: " . $e->getMessage();
+    }    
 	$db->close();	
 
     return $resultset;
 }
 
-function checkExistUserByEmailFromDatabase($param){
-	$db = new ConnectionDatabase();
-    $query = "SELECT IFNULL((SELECT 1 FROM usuarios WHERE email = ? ), 0) AS existe";
-    $posicionUltima = strrpos($param, "x");
-    if ($posicionUltima !== false) {
-        // Reemplazar la última ocurrencia del carácter
-        $param = substr_replace($param, "", $posicionUltima, 1);
-    }    
-    $resultset = $db->runQuery($query,'s',$bindings=[$param]);  	 
-	$db->close();	
+function checkexistsuserByEmailFromDatabase($param){
+
+    $resultset = [];
+        
+    if (
+        isset($param->email,$param->idcompania) &&
+        !empty(trim($param->email)) &&
+        !empty(trim($param->idcompania)) 
+    ) {  
+        $db = new ConnectionDatabase();
+        $query = "SELECT IFNULL((SELECT 1 FROM usuarios WHERE email = ? and idempresa = ? ), 0) AS existe";   
+        try {
+            $resultset = $db->runQuery($query,'sd',$bindings=[$param->email,$param->idcompania]);  	 
+        } catch (PDOException $e) {
+            echo "Error al ejecutar consulta para verificar si un usario existe: " . $e->getMessage();
+        }
+        $db->close();	
+    }
+
+    return $resultset;
+}
+
+function getUserByEmailFromDatabase($param){
+    $resultset = [];
+        
+    if (
+        isset($param->email) &&
+        !empty(trim($param->email)) 
+    ) {     
+        $db = new ConnectionDatabase();
+        $query = "SELECT id, nombre, email, rol, fecha_alta, estado, genero, telcel, telref, urlimg FROM usuarios WHERE email=?";
+        try {        
+            $resultset = $db->runQuery($query,'s',$bindings=[$param->email]);  	 
+        } catch (PDOException $e) {
+            echo "Error al ejecutar consulta para obtener un usuario por email: " . $e->getMessage();
+        }
+        $db->close();	
+    }
 
     return $resultset;
 }
@@ -39,7 +75,11 @@ function checkExistUserByEmailFromDatabase($param){
 function getUserByPhoneFromDatabase($param){
 	$db = new ConnectionDatabase();
     $query = "SELECT id, nombre, email, rol, fecha_alta, estado, genero, telcel, telref, urlimg FROM usuarios WHERE telcel=?";
+    try {
     $resultset = $db->runQuery($query,'s',$bindings=[$param]);  	 
+    } catch (PDOException $e) {
+        echo "Error al ejecutar consulta para obtener un usuario por telefono: " . $e->getMessage();
+    }    
 	$db->close();	
 
     return $resultset;

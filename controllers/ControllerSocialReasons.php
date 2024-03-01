@@ -6,7 +6,11 @@ require_once 'db.php';
 function getAllSocialReasonsFromDatabase(){
 	$db = new ConnectionDatabase();
     $query = "SELECT * FROM razon_social";
-    $resultset = $db->runBaseQuery($query);  	   
+    try {
+        $resultset = $db->runBaseQuery($query);  	   
+    } catch (PDOException $e) {
+        echo "Error al intentar recuperar todas las razones sociales: " . $e->getMessage();
+    }        
 	$db->close();	
 
     return $resultset;
@@ -15,7 +19,11 @@ function getAllSocialReasonsFromDatabase(){
 function getSocialReasonsByIdFromDatabase($param){
 	$db = new ConnectionDatabase();
     $query = "SELECT * FROM razon_social WHERE id=?";
-    $resultset = $db->runQuery($query,'d',$bindings=[$param]);  
+    try {
+        $resultset = $db->runQuery($query,'d',$bindings=[$param]);  
+    } catch (PDOException $e) {
+        echo "Error al intentar recuperar razones social por ID: " . $e->getMessage();
+    }    
 	$db->close();	
 
     return $resultset;
@@ -26,8 +34,12 @@ function getSocialReasonsByNameFromDatabase($param){
     $param = str_replace("%20", " ", $param);
     $param = trim($param);
     $param = stripslashes($param);
-    $param = htmlspecialchars($param);    
-    $resultset = $db->runBaseQuery("SELECT * FROM razon_social WHERE nombre=". $param);
+    $param = htmlspecialchars($param);
+    try {    
+        $resultset = $db->runBaseQuery("SELECT * FROM razon_social WHERE nombre=". $param);
+    } catch (PDOException $e) {
+        echo "Error al intentar recuperar razones social por Nombre: " . $e->getMessage();
+    }         
 	$db->close();	
 
     return $resultset;

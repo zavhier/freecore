@@ -5,7 +5,11 @@ require_once 'db.php';
 function getProducAllFromDatabase(){
 	$db = new ConnectionDatabase();
     $query = "SELECT * FROM productos";
-    $resultset = $db->runBaseQuery($query);  	   
+    try {
+        $resultset = $db->runBaseQuery($query);  	   
+    } catch (PDOException $e) {
+        echo "Error al recuperar todos los productos: " . $e->getMessage();
+    }        
 	$db->close();	
 
     return $resultset;
@@ -14,7 +18,11 @@ function getProducAllFromDatabase(){
 function getProducByIdSocialReasonFromDatabase($id){
 	$db = new ConnectionDatabase();
     $query = "SELECT * FROM productos WHERE razon_social_id = ?";
-    $resultset = $db->runQuery($query,'d',$bindings=[$id]);  	 
+    try {
+        $resultset = $db->runQuery($query,'d',$bindings=[$id]);  	 
+    } catch (PDOException $e) {
+        echo "Error al recuperar los productos por Id de Razon Social: " . $e->getMessage();
+    }        
 	$db->close();	
 
     return $resultset;
@@ -47,7 +55,6 @@ function getProducByQrCodeFromDatabase($code){
         }
 
     } catch (PDOException $e) {
-        // Manejar errores de la base de datos.
         echo "Error al modificar el ID de usuario en la tabla de Productos: " . $e->getMessage();
     }
 
@@ -61,7 +68,11 @@ function getProducByQrCodeFromDatabase($code){
 function getProducByIdFromDatabase($id){
 	$db = new ConnectionDatabase();
     $query = "SELECT * FROM productos WHERE id=?";
-    $resultset = $db->runQuery($query,'d',$bindings=[$id]);  	 
+    try {
+        $resultset = $db->runQuery($query,'d',$bindings=[$id]);  	 
+    } catch (PDOException $e) {     
+        echo "Error al recuperar un producto por ID de producto: " . $e->getMessage();
+    }
 	$db->close();	
 
     return $resultset;
@@ -74,7 +85,11 @@ function getProducByUserFromDatabase($param){
     $db = new ConnectionDatabase();
     if (isset($param) && !empty(trim($param))) {     
         $query = "SELECT * FROM productos WHERE usuario_id=?";
-        $resultset = $db->runQuery($query,'d',$bindings=[$param]);  	 
+        try {
+            $resultset = $db->runQuery($query,'d',$bindings=[$param]); 
+        } catch (PDOException $e) {     
+            echo "Error al recuperar un producto por ID de usuario: " . $e->getMessage();
+        }             
     }
     $db->close();	
 
@@ -84,7 +99,11 @@ function getProducByUserFromDatabase($param){
 function getProducTypeFromDatabase(){
 	$db = new ConnectionDatabase();
     $query = "SELECT * FROM tipo_producto";
-    $resultset = $db->runBaseQuery($query); 	 
+    try {
+        $resultset = $db->runBaseQuery($query); 	 
+    } catch (PDOException $e) {     
+        echo "Error al recuperar los tipos de productos: " . $e->getMessage();
+    }        
 	$db->close();	
 
     return $resultset;
@@ -93,7 +112,11 @@ function getProducTypeFromDatabase(){
 function getProducEstatusFromDatabase(){
 	$db = new ConnectionDatabase();
     $query = "SELECT * FROM tipo_estado";
-    $resultset = $db->runBaseQuery($query); 	 
+    try {
+        $resultset = $db->runBaseQuery($query); 	 
+    } catch (PDOException $e) {     
+        echo "Error al recuperar los tipo de estados: " . $e->getMessage();
+    }        
 	$db->close();	
 
     return $resultset;
@@ -102,7 +125,11 @@ function getProducEstatusFromDatabase(){
 function getCompanyFromDatabase(){
 	$db = new ConnectionDatabase();
     $query = "SELECT * FROM empresas";
-    $resultset = $db->runBaseQuery($query); 	 
+    try {
+        $resultset = $db->runBaseQuery($query); 	 
+    } catch (PDOException $e) {     
+        echo "Error al recuperar todas las empresas: " . $e->getMessage();
+    }  
 	$db->close();	
 
     return $resultset;

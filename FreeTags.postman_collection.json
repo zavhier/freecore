@@ -71,7 +71,7 @@
 				{
 					"name": "Usuario por Email",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
@@ -79,8 +79,12 @@
 								"type": "text"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n            \"email\": \"zavhier_@gmail.com\"\r\n        }"
+						},
 						"url": {
-							"raw": "https://freetags.mysite.com.ar/api/index.php/userbyemail/zavhier@gmail.comx",
+							"raw": "https://freetags.mysite.com.ar/api/index.php/userbyemail",
 							"protocol": "https",
 							"host": [
 								"freetags",
@@ -91,8 +95,7 @@
 							"path": [
 								"api",
 								"index.php",
-								"userbyemail",
-								"zavhier@gmail.comx"
+								"userbyemail"
 							]
 						}
 					},
@@ -101,7 +104,7 @@
 				{
 					"name": "Usuario Chequear por Mail",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
@@ -110,8 +113,12 @@
 								"disabled": true
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n            \"email\": \"zavhier@gmail.com\",\r\n            \"idcompania\": 1\r\n        }"
+						},
 						"url": {
-							"raw": "https://freetags.mysite.com.ar/api/index.php/checkexistuser/zavhier@gmail.comx",
+							"raw": "https://freetags.mysite.com.ar/api/index.php/checkexistsuser",
 							"protocol": "https",
 							"host": [
 								"freetags",
@@ -122,8 +129,7 @@
 							"path": [
 								"api",
 								"index.php",
-								"checkexistuser",
-								"zavhier@gmail.comx"
+								"checkexistsuser"
 							]
 						}
 					},
@@ -358,7 +364,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://freetags.mysite.com.ar/api/index.php/socialreasonbyid/2",
+							"raw": "https://freetags.mysite.com.ar/api/index.php/socialreasonbyid/17",
 							"protocol": "https",
 							"host": [
 								"freetags",
@@ -370,7 +376,7 @@
 								"api",
 								"index.php",
 								"socialreasonbyid",
-								"2"
+								"17"
 							]
 						}
 					},
@@ -388,7 +394,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://freetags.mysite.com.ar/api/index.php/socialreasonbyname/'Servicios Centrales, S.L'",
+							"raw": "https://freetags.mysite.com.ar/api/index.php/socialreasonbyname/'Code Hause S.A'",
 							"protocol": "https",
 							"host": [
 								"freetags",
@@ -400,7 +406,7 @@
 								"api",
 								"index.php",
 								"socialreasonbyname",
-								"'Servicios Centrales, S.L'"
+								"'Code Hause S.A'"
 							]
 						}
 					},
@@ -552,7 +558,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://freetags.mysite.com.ar/api/index.php/producbyuser/17",
+							"raw": "https://freetags.mysite.com.ar/api/index.php/producbyuser/90",
 							"protocol": "https",
 							"host": [
 								"freetags",
@@ -564,7 +570,7 @@
 								"api",
 								"index.php",
 								"producbyuser",
-								"17"
+								"90"
 							]
 						}
 					},
@@ -583,7 +589,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://freetags.mysite.com.ar/api/index.php/productbyqrcode/b0529d0a",
+							"raw": "https://freetags.mysite.com.ar/api/index.php/productbyqrcode/oSvygiVt",
 							"protocol": "https",
 							"host": [
 								"freetags",
@@ -595,7 +601,7 @@
 								"api",
 								"index.php",
 								"productbyqrcode",
-								"b0529d0a"
+								"oSvygiVt"
 							]
 						}
 					},
@@ -613,7 +619,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://freetags.mysite.com.ar/api/index.php/productbysocialreason/1",
+							"raw": "https://freetags.mysite.com.ar/api/index.php/productbysocialreason/17",
 							"protocol": "https",
 							"host": [
 								"freetags",
@@ -625,7 +631,7 @@
 								"api",
 								"index.php",
 								"productbysocialreason",
-								"1"
+								"17"
 							]
 						}
 					},
@@ -1102,7 +1108,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwOTE5NzczNSwicm9sIjoibWFuYWdlciJ9.g+auVIeF8AiX7F+vVEg50mqqaKpy4M5LK6UdFfYdpEI=",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwOTI4OTQ0MCwicm9sIjoibWFuYWdlciJ9.UettzeCy+t5toM0ol2oSY1VJUxeCkEAXiDQ5PXC9ah4=",
 			"type": "string"
 		},
 		{
