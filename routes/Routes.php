@@ -4,6 +4,7 @@ require 'controllers/ControllerUser.php';
 require 'controllers/ControllerProduc.php';
 require 'controllers/ControllerSocialReasons.php';
 require 'controllers/ControllerSendMail.php';
+require 'controllers/ControllerLogsApp.php';
 require_once 'response.php';
 
 
@@ -14,7 +15,7 @@ function validateRoute($request){
     $rutaspermitidas = [ "auth","user", "userbyid", "dissolveuser", "userbyemail", "userbyphone","recoveruser","checkexistsuser",
 						 "socialreason", "socialreasonbyid", "socialreasonbyname",  
 						 "produc","producbyuser","productype","productstate","productbyqrcode", "producbystate","productbysocialreason", "productsuploadqr",
-						 "company","encryptpass","sendmail",
+						 "company","encryptpass","sendmail", "writetotogfile"
 						];
 	$rutaspermitidas = array_map('strtolower', $rutaspermitidas);
     $route = strtolower($route);
@@ -278,7 +279,18 @@ function handlePostRequest($request,$token) {
 				$response = recoverUser($mail);	
 				return response::json($response);	  
 			}
+		}	
+		
+		if ($request === '/api/writetotogfile') {
+
+			if (validateAuthorization($token, $request, "writetotogfile")) {
+				$payload = file_get_contents('php://input'); 				
+				$params = json_decode($payload);
+				$response = writeToLogFileFromDatabase($params);	
+				return response::json($response,$authorization);	  
+			}
 		}			
+
 	
 	}else{
 		response::json('',501);		

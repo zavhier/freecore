@@ -1083,6 +1083,39 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Escribir en LOG",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n            \"text\": \"Esta es mensaje de error de prueba!\"\r\n        }"
+				},
+				"url": {
+					"raw": "https://freetags.mysite.com.ar/api/index.php/writetotogfile",
+					"protocol": "https",
+					"host": [
+						"freetags",
+						"mysite",
+						"com",
+						"ar"
+					],
+					"path": [
+						"api",
+						"index.php",
+						"writetotogfile"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
