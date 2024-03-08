@@ -242,10 +242,11 @@ function handlePostRequest($request,$token) {
 		}	
 
 		if ($request === '/api/produc') {
-
+			
 			if (validateAuthorization($token, $request, "produc")) {	
 				$payload = file_get_contents('php://input'); 				
 				$params = json_decode($payload);
+				
 				$response = saveProducFromDatabase($params);	
 				return response::json($response,$authorization);	  
 			}
@@ -281,7 +282,7 @@ function handlePostRequest($request,$token) {
 			}
 		}	
 		
-		if ($request === '/api/writetotogfile') {
+		if ($request === '/api/writetologfile') {
 
 			if (validateAuthorization($token, $request, "writetotogfile")) {
 				$payload = file_get_contents('php://input'); 				

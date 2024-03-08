@@ -30,7 +30,7 @@ function SendMail($email){
         if(!empty(trim($email->link))){
             $link = trim($email->link);
         }else{
-            $link = "null";
+            $link = '';
         }
         
 		$mensaje = template::emailPointContactTemplate($asunto,$email->nombre, $email->mensaje, $link);	

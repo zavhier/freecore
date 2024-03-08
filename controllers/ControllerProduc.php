@@ -17,7 +17,7 @@ function getProducAllFromDatabase(){
 
 function getProducByIdSocialReasonFromDatabase($id){
 	$db = new ConnectionDatabase();
-    $query = "SELECT * FROM productos WHERE razon_social_id = ?";
+    $query = "SELECT * FROM productos WHERE razon_social_id = ? and condicion = 1";
     try {
         $resultset = $db->runQuery($query,'d',$bindings=[$id]);  	 
     } catch (PDOException $e) {
@@ -138,13 +138,14 @@ function getCompanyFromDatabase(){
 function saveProducFromDatabase($producto) {
 
     $resultset = [];
-        
+    // Condicion necesaria para crear un producto es que deba existir
+    // el usuario_id en la tabla Usuario y el razon_social_id en la tabla razon_social,
+    // de lo contrario retornara 404.
     if (
         isset($producto->nombre, $producto->descripcion) &&
         !empty(trim($producto->nombre)) &&
         !empty(trim($producto->descripcion)) 
-        // !empty(trim($producto->usuario_id))
-    ) {   
+    ) {  
         $nombre = trim($producto->nombre);
         $descripcion = trim($producto->descripcion);
         $fecha_creacion = date('Y-m-d H:i:s');        
@@ -165,11 +166,12 @@ function saveProducFromDatabase($producto) {
         $bindings = [$nombre, $descripcion, $fecha_creacion, $codigo_qr,$url_qr,$serial,$razon_social_id,$usuario_id,
                     $tipo_estado_id,$tipo_producto_id,$fecha_baja,$urlimg,$condicion
         ];
-
+        
         $db = new ConnectionDatabase();
         $db->getConnection()->autocommit(FALSE);
         try {
             if ($db->insert($query, 'ssssssddddssd', $bindings)) {
+                              
                 $id = mysqli_insert_id($db->getConnection()); 
                 $resultset = [
                     "id" => $id,
@@ -301,7 +303,7 @@ function updateProducByStateFromDatabase($producto) {
 function updateProducFromDatabase($producto) {
 	
     $resultset = [];
-    
+    // Condicion necesaria para actualizar que exista el id de usuario en la tabla Usuario.
     if (
         isset($producto->id,$producto->nombre, $producto->descripcion) &&
         !empty(trim($producto->id)) &&
@@ -321,17 +323,18 @@ function updateProducFromDatabase($producto) {
         $fecha_baja = !empty($producto->fecha_baja) ? $producto->fecha_baja : null; 
         $urlimg = !empty($producto->urlimg) ? $producto->urlimg : null;
         $condicion = !empty($producto->condicion) ? $producto->condicion : 1;
-        
+ 
         $query = "UPDATE `productos` SET `nombre`=?,`descripcion`=?,`fecha_creacion`=?,`codigo_qr`=?, `url_qr`=?, ".
         "`serial`=?, `razon_social_id`=?, `usuario_id`=?,`tipo_estado_id`=?,`tipo_producto_id`=?,`fecha_baja`=?,`urlimg`=?,`condicion`=? WHERE id=?";
 
         $bindings = [$nombre, $descripcion, $fecha_creacion, $codigo_qr,$url_qr,$serial,$razon_social_id,$usuario_id,
                     $tipo_estado_id,$tipo_producto_id,$fecha_baja,$urlimg,$condicion, $id
         ];
+            
         $db = new ConnectionDatabase();
         $db->getConnection()->autocommit(FALSE);
         try {
-            if ($db->insert($query, 'ssssssddddssdd', $bindings)) {                
+            if ($db->insert($query, 'ssssssddddssdd', $bindings)) {             
                 $resultset = [
                     "id" => $id,
                     "nombre" => $nombre,
@@ -394,7 +397,7 @@ function updateProducByQrCodeFromDatabase($producto) {
             if ($qr_exists) {
                 if ($user_exists) {
                     // El código QR y el usuario_id existen, proceder con la actualización.
-                    $query_update = "UPDATE `productos` SET `usuario_id`=? WHERE codigo_qr=?";
+                    $query_update = "UPDATE `productos` SET `usuario_id`=? , tipo_estado_id = 2 WHERE codigo_qr=?";
                     $bindings_update = [$usuario_id, $codigo_qr];
 
                     if ($db->insert($query_update, 'ds', $bindings_update)) {
