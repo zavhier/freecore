@@ -14,7 +14,7 @@ function validateRoute($request){
 	// siempre que se cree una nueva ruta la debemos agregar en esta seccion
     $rutaspermitidas = [ "auth","user", "userbyid", "dissolveuser", "userbyemail", "userbyphone","recoveruser","checkexistsuser",
 						 "socialreason", "socialreasonbyid", "socialreasonbyname",  
-						 "produc","producbyuser","productype","productstate","productbyqrcode", "producbystate","productbysocialreason", "productsuploadqr",
+						 "produc","producbyuser","productype","productstate","productbyqrcode", "producbystate","productbysocialreason", "productsuploadqr","producbycondition",
 						 "company","encryptpass","sendmail", "writetotogfile"
 						];
 	$rutaspermitidas = array_map('strtolower', $rutaspermitidas);
@@ -351,6 +351,16 @@ function handlePutRequest($request,$token) {
 				return response::json($response,$authorization);	  
 			}
 		}
+
+		if ($request === '/api/producbycondition') {		
+
+			if (validateAuthorization($token, $request, "producbycondition")) {					
+				$payload = file_get_contents('php://input'); 
+				$params = json_decode($payload);				
+				$response = updateProducConditionFromDatabase($params);			
+				return response::json($response,$authorization);	  
+			}
+		}		
 
 		if ($request === '/api/productbyqrcode') {		
 

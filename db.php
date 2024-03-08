@@ -82,7 +82,11 @@ class ConnectionDatabase {
     function update($query, $param_type, $param_value_array) {
         $sql = $this->conn->prepare($query);
         $this->bindQueryParams($sql, $param_type, $param_value_array);
-        $sql->execute();
+        if ($sql->execute()) { 
+            return $sql->affected_rows;
+        }else{
+            return 0;
+        }
     }
 
     function delete($query, $id) {

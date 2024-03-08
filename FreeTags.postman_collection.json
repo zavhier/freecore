@@ -7,6 +7,54 @@
 	},
 	"item": [
 		{
+			"name": "Autentificar",
+			"item": [
+				{
+					"name": "Autentificacion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								},
+								{
+									"key": "company",
+									"value": "{{company}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/auth",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Usuario Request",
 			"item": [
 				{
@@ -50,7 +98,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://freetags.mysite.com.ar/api/index.php/userbyid/17",
+							"raw": "https://freetags.mysite.com.ar/api/index.php/userbyid/109",
 							"protocol": "https",
 							"host": [
 								"freetags",
@@ -62,7 +110,7 @@
 								"api",
 								"index.php",
 								"userbyid",
-								"17"
+								"109"
 							]
 						}
 					},
@@ -683,7 +731,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "        {\r\n            \"id\": \"19\",\r\n            \"nombre\": \"Actualizado P2\",\r\n            \"descripcion\": \"Lapto nueva\",\r\n            \"fecha_creacion\": \"2023-12-15\",\r\n            \"codigo_qr\": \"c://\",\r\n            \"url_qr\": null,\r\n            \"serial\": \"123443234432344\",\r\n            \"razon_social_id\": null,\r\n            \"usuario_id\": \"17\",\r\n            \"tipo_estado_id\": \"2\",\r\n            \"tipo_producto_id\": \"2\",\r\n            \"fecha_baja\": null,\r\n            \"urlimg\": \"/asset/img/\",\r\n            \"condicion\": \"1\"   \r\n        }"
+							"raw": "        {\r\n            \"id\": \"182\",\r\n            \"nombre\": \"Actualizado P3 xxx\",\r\n            \"descripcion\": \"Lapto nueva\",\r\n            \"fecha_creacion\": \"2023-12-15\",\r\n            \"codigo_qr\": \"YhxIObP6\",\r\n            \"url_qr\": \"https://freetags.com.ar/buscar/wd3ThAXA\",\r\n            \"serial\": \"\",\r\n            \"razon_social_id\": 17,\r\n            \"usuario_id\": \"109\",\r\n            \"tipo_estado_id\": 2,\r\n            \"tipo_producto_id\": 2,\r\n            \"fecha_baja\": null,\r\n            \"urlimg\": \"-\",\r\n            \"condicion\": \"1\"   \r\n        }"
 						},
 						"url": {
 							"raw": "https://freetags.mysite.com.ar/api/index.php/produc",
@@ -771,6 +819,39 @@
 					"response": []
 				},
 				{
+					"name": "Producto Modificar Condicion",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n            \"id\": \"227\",\r\n            \"condicion\": \"0\"   \r\n        }"
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/producbycondition",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"producbycondition"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Producto Borrar",
 					"request": {
 						"method": "DELETE",
@@ -803,51 +884,8 @@
 			]
 		},
 		{
-			"name": "Pruebas varias",
+			"name": "Otros",
 			"item": [
-				{
-					"name": "Autentificacion PRUEBA",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "username",
-									"value": "mapfre@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "1234",
-									"type": "text"
-								},
-								{
-									"key": "company",
-									"value": "1",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "https://freetags.mysite.com.ar/api/index.php/auth",
-							"protocol": "https",
-							"host": [
-								"freetags",
-								"mysite",
-								"com",
-								"ar"
-							],
-							"path": [
-								"api",
-								"index.php",
-								"auth"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "Autentificacion otro usuario",
 					"request": {
@@ -892,22 +930,23 @@
 					"response": []
 				},
 				{
-					"name": "Autentificacion Generar Passw",
+					"name": "Envio de Mail",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "password",
-									"value": "{{password}}",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": "        {\r\n            \"asunto\": \"Asunto personalizado prueba\",\r\n            \"nombre\": \"Laura Soledad Nuñes\",\r\n            \"correo\": \"alvarez.leandro.a@gmail.com\",\r\n            \"tipoenvio\":\"3\",\r\n            \"mensaje\": \"Otros datos que necesitemos informar\",\r\n            \"link\": \"https://www.google.com/maps/dir//-34.5046279,-58.8133809\"\r\n        }"
 						},
 						"url": {
-							"raw": "https://freetags.mysite.com.ar/api/index.php/encryptpass",
+							"raw": "https://freetags.mysite.com.ar/api/index.php/sendmail",
 							"protocol": "https",
 							"host": [
 								"freetags",
@@ -918,204 +957,127 @@
 							"path": [
 								"api",
 								"index.php",
-								"encryptpass"
+								"sendmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tipo Producto Obtener",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/productype",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"productype"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estado Producto Obtener",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/productstate",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"productstate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Empresa Obtener",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/company",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Escribir en LOG",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\r\n            \"text\": \"Esta es mensaje de error de prueba!\"\r\n        }"
+						},
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/writetotogfile",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"writetotogfile"
 							]
 						}
 					},
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "Autentificacion",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "username",
-							"value": "{{username}}",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "text"
-						},
-						{
-							"key": "company",
-							"value": "{{company}}",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/auth",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"auth"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Envio de Mail",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "        {\r\n            \"asunto\": \"Asunto personalizado prueba\",\r\n            \"nombre\": \"Laura Soledad Nuñes\",\r\n            \"correo\": \"alvarez.leandro.a@gmail.com\",\r\n            \"tipoenvio\":\"3\",\r\n            \"mensaje\": \"Otros datos que necesitemos informar\",\r\n            \"link\": \"https://www.google.com/maps/dir//-34.5046279,-58.8133809\"\r\n        }"
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/sendmail",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"sendmail"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Tipo Producto Obtener",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/productype",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"productype"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Estado Producto Obtener",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/productstate",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"productstate"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Empresa Obtener",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/company",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"company"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Escribir en LOG",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "        {\r\n            \"text\": \"Esta es mensaje de error de prueba!\"\r\n        }"
-				},
-				"url": {
-					"raw": "https://freetags.mysite.com.ar/api/index.php/writetotogfile",
-					"protocol": "https",
-					"host": [
-						"freetags",
-						"mysite",
-						"com",
-						"ar"
-					],
-					"path": [
-						"api",
-						"index.php",
-						"writetotogfile"
-					]
-				}
-			},
-			"response": []
 		}
 	],
 	"event": [
@@ -1141,7 +1103,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwOTI4OTQ0MCwicm9sIjoibWFuYWdlciJ9.UettzeCy+t5toM0ol2oSY1VJUxeCkEAXiDQ5PXC9ah4=",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwOTk0NzY5Niwicm9sIjoibWFuYWdlciJ9.w6PWJzRrAnBSDXrqet/FZFFFIyudwo3+S+5r5crIbQM=",
 			"type": "string"
 		},
 		{

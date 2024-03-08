@@ -259,6 +259,46 @@ function saveProducBarcodeQrFromDatabase($productos) {
     return $resultset;
 }
 
+function updateProducConditionFromDatabase($producto) {
+	// Condicion necesaria para actualizar que exista el id de usuario en la tabla Usuario.
+    $resultset = [];
+
+    if (
+        isset($producto->id) &&
+        !empty(trim($producto->id)) 
+    ) {
+        $id = trim($producto->id);	
+        $condicion = !empty($producto->condicion) ? $producto->condicion : 0;
+        $fecha_baja = date('Y-m-d H:i:s');
+
+        $query = "UPDATE `productos` SET `fecha_baja`=?,`condicion`=? WHERE id=?";       
+        $bindings = [$fecha_baja,$condicion, $id];
+
+        $db = new ConnectionDatabase();
+        $db->getConnection()->autocommit(FALSE);
+        try {
+            $affected_rows = $db->update($query, 'sdd', $bindings);
+            if ($affected_rows) {             
+                $resultset = [
+                    "id" => $id,
+                    "filas" => $affected_rows,
+                    "estado" => "200"
+                ];
+                $db->getConnection()->commit();
+            } else {
+                $resultset["estado"] = "404";
+            }
+        } catch (PDOException $e) {
+            echo "Error al modificar condición del producto: " . $e->getMessage();
+        }
+        $db->close();
+
+    } else {
+        $resultset["estado"] = "404";
+    }
+
+    return $resultset; 
+}
 
 function updateProducByStateFromDatabase($producto) {
 	
@@ -322,7 +362,7 @@ function updateProducFromDatabase($producto) {
         $tipo_producto_id = !empty($producto->tipo_producto_id) ? $producto->tipo_producto_id : null;
         $fecha_baja = !empty($producto->fecha_baja) ? $producto->fecha_baja : null; 
         $urlimg = !empty($producto->urlimg) ? $producto->urlimg : null;
-        $condicion = !empty($producto->condicion) ? $producto->condicion : 1;
+        $condicion = !empty($producto->condicion) ? $producto->condicion : 0;
  
         $query = "UPDATE `productos` SET `nombre`=?,`descripcion`=?,`fecha_creacion`=?,`codigo_qr`=?, `url_qr`=?, ".
         "`serial`=?, `razon_social_id`=?, `usuario_id`=?,`tipo_estado_id`=?,`tipo_producto_id`=?,`fecha_baja`=?,`urlimg`=?,`condicion`=? WHERE id=?";
@@ -334,7 +374,8 @@ function updateProducFromDatabase($producto) {
         $db = new ConnectionDatabase();
         $db->getConnection()->autocommit(FALSE);
         try {
-            if ($db->insert($query, 'ssssssddddssdd', $bindings)) {             
+            $affected_rows = $db->update($query, 'ssssssddddssdd', $bindings);
+            if ($affected_rows) {             
                 $resultset = [
                     "id" => $id,
                     "nombre" => $nombre,
@@ -350,11 +391,13 @@ function updateProducFromDatabase($producto) {
                     "fecha_baja" => $fecha_baja,
                     "urlimg" => $urlimg,
                     "condicion" => $condicion,
-                    "estado" => "200"
+                    "estado" => "200",
+                    "filas" => $affected_rows,
                 ];
                 $db->getConnection()->commit();
             } else {
-                $resultset["estado"] = "404";
+                $resultset["info"] = "No fue posible realizar la solicitud. Revice si existe el Id de usuario en la tabla Usuarios.";
+                $resultset["estado"] = "404";                
             }
         } catch (PDOException $e) {
             echo "Error al modificar el producto: " . $e->getMessage();
