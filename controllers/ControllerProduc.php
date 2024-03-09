@@ -278,7 +278,7 @@ function updateProducConditionFromDatabase($producto) {
         $db->getConnection()->autocommit(FALSE);
         try {
             $affected_rows = $db->update($query, 'sdd', $bindings);
-            if ($affected_rows) {             
+            if ($affected_rows>=0) {             
                 $resultset = [
                     "id" => $id,
                     "filas" => $affected_rows,
@@ -341,75 +341,78 @@ function updateProducByStateFromDatabase($producto) {
 }
 
 function updateProducFromDatabase($producto) {
-	
+    
     $resultset = [];
-    // Condicion necesaria para actualizar que exista el id de usuario en la tabla Usuario.
-    if (
-        isset($producto->id,$producto->nombre, $producto->descripcion) &&
-        !empty(trim($producto->id)) &&
-        !empty(trim($producto->nombre)) 
-    ) {
-        $id = trim($producto->id);	
+
+    // Verificar si $producto es un objeto y tiene las propiedades requeridas
+    if (is_object($producto) && property_exists($producto, 'id') && property_exists($producto, 'nombre') && property_exists($producto, 'descripcion')) {
+        $id = trim($producto->id);
         $nombre = trim($producto->nombre);
         $descripcion = trim($producto->descripcion);
-        $fecha_creacion = !empty($producto->fecha_creacion) ? $producto->fecha_creacion : date('Y-m-d H:i:s');      
-        $codigo_qr = !empty($producto->codigo_qr) ? $producto->codigo_qr : '';         
-        $url_qr = !empty($producto->url_qr) ? $producto->url_qr : null; 
-        $serial = !empty($producto->serial) ? $producto->serial : null; 
-        $razon_social_id = !empty($producto->razon_social_id) ? $producto->razon_social_id : null; 
-        $usuario_id = trim($producto->usuario_id);
-        $tipo_estado_id = !empty($producto->tipo_estado_id) ? $producto->tipo_estado_id : null;
-        $tipo_producto_id = !empty($producto->tipo_producto_id) ? $producto->tipo_producto_id : null;
-        $fecha_baja = !empty($producto->fecha_baja) ? $producto->fecha_baja : null; 
-        $urlimg = !empty($producto->urlimg) ? $producto->urlimg : null;
-        $condicion = !empty($producto->condicion) ? $producto->condicion : 0;
- 
-        $query = "UPDATE `productos` SET `nombre`=?,`descripcion`=?,`fecha_creacion`=?,`codigo_qr`=?, `url_qr`=?, ".
-        "`serial`=?, `razon_social_id`=?, `usuario_id`=?,`tipo_estado_id`=?,`tipo_producto_id`=?,`fecha_baja`=?,`urlimg`=?,`condicion`=? WHERE id=?";
 
-        $bindings = [$nombre, $descripcion, $fecha_creacion, $codigo_qr,$url_qr,$serial,$razon_social_id,$usuario_id,
-                    $tipo_estado_id,$tipo_producto_id,$fecha_baja,$urlimg,$condicion, $id
-        ];
-            
+        // Establecer valores predeterminados para propiedades opcionales
+        $fecha_creacion = isset($producto->fecha_creacion) ? $producto->fecha_creacion : date('Y-m-d H:i:s');
+        $codigo_qr = isset($producto->codigo_qr) ? $producto->codigo_qr : '';
+        $url_qr = isset($producto->url_qr) ? $producto->url_qr : null;
+        $serial = isset($producto->serial) ? $producto->serial : null;
+        $razon_social_id = isset($producto->razon_social_id) ? $producto->razon_social_id : null;
+        $usuario_id = isset($producto->usuario_id) ? trim($producto->usuario_id) : null;
+        $tipo_estado_id = isset($producto->tipo_estado_id) ? $producto->tipo_estado_id : null;
+        $tipo_producto_id = isset($producto->tipo_producto_id) ? $producto->tipo_producto_id : null;
+        $fecha_baja = isset($producto->fecha_baja) ? $producto->fecha_baja : null;
+        $urlimg = isset($producto->urlimg) ? $producto->urlimg : null;
+        $condicion = isset($producto->condicion) ? $producto->condicion : 0;
+
+        // Consulta preparada para actualizar el producto
+        $query = "UPDATE `productos` SET `nombre`=?, `descripcion`=?, `fecha_creacion`=?, `codigo_qr`=?, `url_qr`=?, ".
+                 "`serial`=?, `razon_social_id`=?, `usuario_id`=?, `tipo_estado_id`=?, `tipo_producto_id`=?, `fecha_baja`=?, ".
+                 "`urlimg`=?, `condicion`=? WHERE id=?";
+
+        $bindings = [$nombre, $descripcion, $fecha_creacion, $codigo_qr, $url_qr, $serial, $razon_social_id, $usuario_id,
+                     $tipo_estado_id, $tipo_producto_id, $fecha_baja, $urlimg, $condicion, $id];
+
+        // Iniciar transacción y ejecutar la consulta
         $db = new ConnectionDatabase();
-        $db->getConnection()->autocommit(FALSE);
+        $db->getConnection()->autocommit(false);
         try {
             $affected_rows = $db->update($query, 'ssssssddddssdd', $bindings);
-            if ($affected_rows) {             
+
+            // Comprobar si se afectaron filas
+            if ($affected_rows>=0) {
                 $resultset = [
-                    "id" => $id,
-                    "nombre" => $nombre,
-                    "descripcion" => $descripcion,
-                    "fecha_creacion" => $fecha_creacion,
-                    "codigo_qr" => $codigo_qr,
-                    "url_qr"=>$url_qr,
-                    "serial"=>$serial,
-                    "razon_social_id" => $razon_social_id,
-                    "usuario_id" => $usuario_id,
-                    "tipo_estado_id" => $tipo_estado_id,
-                    "tipo_producto_id" => $tipo_producto_id,
-                    "fecha_baja" => $fecha_baja,
-                    "urlimg" => $urlimg,
-                    "condicion" => $condicion,
-                    "estado" => "200",
-                    "filas" => $affected_rows,
+                        "id" => $id, "nombre" => $nombre,
+                        "descripcion" => $descripcion,
+                        "fecha_creacion" => $fecha_creacion,
+                        "codigo_qr" => $codigo_qr,
+                        "url_qr" => $url_qr,
+                        "serial" => $serial,
+                        "razon_social_id" => $razon_social_id,
+                        "usuario_id" => $usuario_id,
+                        "tipo_estado_id" => $tipo_estado_id,
+                        "tipo_producto_id" => $tipo_producto_id,
+                        "fecha_baja" => $fecha_baja,
+                        "urlimg" => $urlimg,
+                        "condicion" => $condicion,
+                        "estado" => "200",
+                        "filas" => $affected_rows,
                 ];
                 $db->getConnection()->commit();
-            } else {
-                $resultset["info"] = "No fue posible realizar la solicitud. Revice si existe el Id de usuario en la tabla Usuarios.";
-                $resultset["estado"] = "404";                
+            } elseif($affected_rows) {
+                $resultset["info"] = "No se pudo llevar a cabo la operación. Verifique que los campos 'usuario_id' y 'razon_social_id' existan en las tablas.";
+                $resultset["filas"] = 0;
+                $resultset["estado"] = "404";
             }
         } catch (PDOException $e) {
-            echo "Error al modificar el producto: " . $e->getMessage();
+            $resultset["estado"] = "500"; // Error interno del servidor
         }
         $db->close();
-
     } else {
-        $resultset["estado"] = "404";
+        $resultset["estado"] = "400"; // Solicitud incorrecta
     }
 
     return $resultset; 
 }
+
 
 function updateProducByQrCodeFromDatabase($producto) {
     $resultset = ["estado" => "404", "info" => "Faltan datos requeridos para completar la solicitud."];

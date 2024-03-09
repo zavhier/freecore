@@ -85,7 +85,7 @@ class ConnectionDatabase {
         if ($sql->execute()) { 
             return $sql->affected_rows;
         }else{
-            return 0;
+            return -1;
         }
     }
 
