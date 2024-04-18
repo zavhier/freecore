@@ -271,14 +271,8 @@
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "email",
-									"value": "alvarez.leandro.a@gmail.com",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": "        {\r\n            \"email\": \"alvarez.leandro.a@gmail.com\"\r\n        }\r\n        "
 						},
 						"url": {
 							"raw": "https://freetags.mysite.com.ar/api/index.php/recoveruser",
@@ -650,6 +644,37 @@
 								"index.php",
 								"productbyqrcode",
 								"oSvygiVt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Producto Obtener por Serial",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://freetags.mysite.com.ar/api/index.php/productbyqrserial/VEvZgMsl",
+							"protocol": "https",
+							"host": [
+								"freetags",
+								"mysite",
+								"com",
+								"ar"
+							],
+							"path": [
+								"api",
+								"index.php",
+								"productbyqrserial",
+								"VEvZgMsl"
 							]
 						}
 					},
@@ -1103,7 +1128,7 @@
 	"variable": [
 		{
 			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcwOTk0NzY5Niwicm9sIjoibWFuYWdlciJ9.w6PWJzRrAnBSDXrqet/FZFFFIyudwo3+S+5r5crIbQM=",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRFVzZXIiOjEsIk5vbWJyZVVzdWFyaW8iOiJhZG1pbiIsImV4cCI6MTcxMTI0MjIzMiwicm9sIjoibWFuYWdlciJ9.lDg7TVUX5bjqT7sKlPGrNYNR4DYX0s72v61akDdrMwA=",
 			"type": "string"
 		},
 		{

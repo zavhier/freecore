@@ -14,7 +14,7 @@ function validateRoute($request){
 	// siempre que se cree una nueva ruta la debemos agregar en esta seccion
     $rutaspermitidas = [ "auth","user", "userbyid", "dissolveuser", "userbyemail", "userbyphone","recoveruser","checkexistsuser",
 						 "socialreason", "socialreasonbyid", "socialreasonbyname",  
-						 "produc","producbyuser","productype","productstate","productbyqrcode", "producbystate","productbysocialreason", "productsuploadqr","producbycondition",
+						 "produc","producbyuser","productype","productstate","productbyqrcode", "producbystate","productbysocialreason", "productsuploadqr","producbycondition", "productbyqrserial",
 						 "company","encryptpass","sendmail", "writetotogfile"
 						];
 	$rutaspermitidas = array_map('strtolower', $rutaspermitidas);
@@ -144,7 +144,15 @@ function handleGetRequest($request,$token) {
 				response::json($response);
 			}	
 		}
-		
+
+		if (strpos($request, '/api/productbyqrserial') !== false) {   
+
+			if($url == "productbyqrserial"){			
+				$response = getProducBySerialFromDatabase($param);
+				response::json($response);
+			}	
+		}
+
 		if (strpos($request, '/api/productbysocialreason') !== false) {   
 
 			if (validateAuthorization($token, $request, "productbysocialreason")) {				
@@ -267,7 +275,6 @@ function handlePostRequest($request,$token) {
 			if($url == "sendmail"){	
 				$payload = file_get_contents('php://input'); 				
 				$params = json_decode($payload);
-
 				$response = SendMail($params);	
 				return response::json($response);	  
 			}
@@ -276,8 +283,9 @@ function handlePostRequest($request,$token) {
 		if ($request === '/api/recoveruser') {
 
 			if($url == "recoveruser"){
-				$mail = $_POST['email'];
-				$response = recoverUser($mail);	
+				$payload = file_get_contents('php://input'); 				
+				$params = json_decode($payload);					
+				$response = recoverUser($params);	
 				return response::json($response);	  
 			}
 		}	

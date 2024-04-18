@@ -63,6 +63,40 @@ function getProducByQrCodeFromDatabase($code){
     return $resultset;
 }
 
+function getProducBySerialFromDatabase($code){
+
+    $db = new ConnectionDatabase();
+    
+    try {
+
+        // Verificar si el codigo Qr existe en la tabla productos.
+        $query_check_qr = "SELECT 1 FROM `productos` WHERE serial=?";
+        $qr_exists = $db->runQuery($query_check_qr, 's', $bindings_check_qr = [$code]);
+       
+        if ($qr_exists){
+            // Verificar si el usuario_id es NULL en la tabla productos.
+            $query_check_qr = "SELECT 1 FROM `productos` WHERE codigo_qr=? AND usuario_id IS NOT NULL";        
+            $user_exists = $db->runQuery($query_check_qr, 's', $bindings_check_qr = [$code]); 
+
+            if ($user_exists) {
+                $query = "SELECT 'si' as existe_usuario, 'INFO_PROD' as titulo_1,  p.*, 'INFO_RAZON_SOCIAL' as titulo_2, r.nombre as nombre_rz, r.direccion,r.telefono,r.correo,r.fecha_creacion as fecha_registro, 'INFO_USUARIO' as titulo_3, u.nombre,u.email,u.rol,u.fecha_alta,u.estado,u.genero,u.telcel,u.telref,u.urlimg,u.idempresa FROM productos p LEFT JOIN usuarios u ON p.usuario_id = u.id LEFT JOIN razon_social r ON p.razon_social_id = r.id WHERE p.codigo_qr = ?";
+            }else{
+                $query = "SELECT 'no' as existe_usuario, 'INFO_PROD' as titulo_1,  p.*, 'INFO_RAZON_SOCIAL' as titulo_2, r.nombre as nombre_rz, r.direccion,r.telefono,r.correo,r.fecha_creacion as fecha_registro, 'INFO_USUARIO' as titulo_3, '' as nombre,'' as email, '' as rol, '' as fecha_alta, '' as estado, '' as genero, '' as telcel, '' as telref, '' as urlimg, '' as idempresa FROM productos p LEFT JOIN usuarios u ON p.usuario_id = u.id LEFT JOIN razon_social r ON p.razon_social_id = r.id WHERE p.codigo_qr = ?";
+            }
+            $resultset = $db->runQuery($query,'s',$bindings=[$code]);  	 
+        }else{
+            $resultset["estado"] = "404";
+            $resultset["info"] = "El código Qr ".$code." proporcionado no existe en la tabla Productos.";            
+        }
+
+    } catch (PDOException $e) {
+        echo "Error al modificar el ID de usuario en la tabla de Productos: " . $e->getMessage();
+    }
+
+    $db->close();
+	
+    return $resultset;
+}
 
 
 function getProducByIdFromDatabase($id){

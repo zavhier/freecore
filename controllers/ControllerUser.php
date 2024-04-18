@@ -53,12 +53,13 @@ function checkexistsuserByEmailFromDatabase($param){
 }
 
 function getUserByEmailFromDatabase($param){
+	// recibe un objeto como parametro.
     $resultset = [];
-        
+
     if (
         isset($param->email) &&
         !empty(trim($param->email)) 
-    ) {     
+    ) {     		
         $db = new ConnectionDatabase();
         $query = "SELECT id, nombre, email, rol, fecha_alta, estado, genero, telcel, telref, urlimg FROM usuarios WHERE email=?";
         try {        
@@ -262,13 +263,18 @@ function removeUserCompletelyFromDatabase($id){
 }
 
 function recoverUser($email){
-        
+
     // buscar por el input (email) si existe el db. 
-    $result = getUserByEmailFromDatabase($email);    
-    if(isset($result)){
+    $result = getUserByEmailFromDatabase($email); 
+
+    if(isset($result) && ! empty($result) ){
+
         $iduser = $result[0]["id"];
         $nombre = $result[0]["nombre"];
-
+		$email  = $result[0]["email"];
+		$resultset = []; // por seguridad limpio el array.
+		$resultset["estado"] = "200";
+		
         // creo un pass provisorio
         $password = "";
         $length = 5;
@@ -320,7 +326,7 @@ function recoverUser($email){
         $resultset["estado"] = "404";
         $resultset["mensaje"] = "El email proporcionado no corresponde a un usuario válido.";
     }
-    
+
     return $resultset; 
 
 }
