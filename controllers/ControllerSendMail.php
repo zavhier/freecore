@@ -15,18 +15,21 @@ function SendMail($email){
         !empty(trim($email->tipoenvio)) &&
         !empty(trim($email->mensaje))
     ) {        
-        $De      =  config::getEmailFrom();
+
+        $De      = "";
         $Para    = $email->correo; 
         $Cc      = "";
-
+         
         if($email->tipoenvio == 1){
-            $asunto  = config::getEmailSubjectFreetags();
+            $De      =  config::getEmailFreeTags();
+            $asuntoDefault  = config::getEmailSubjectFreetags();
         }elseif($email->tipoenvio == 2){
-            config::getEmailSubjectSafeBags();
-        }else{
-            $asunto  = isset($email->asunto) ? trim($email->asunto) : '';
+            $De      =  config::getEmailSafeBags();
+            $asuntoDefault  = config::getEmailSubjectSafebags();
         }
-        		
+        
+        $asunto  = isset($email->asunto) ? trim($email->asunto) : $asuntoDefault;
+                		
         if(!empty(trim($email->link))){
             $link = trim($email->link);
         }else{

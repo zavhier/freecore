@@ -61,7 +61,7 @@ function getUserByEmailFromDatabase($param){
         !empty(trim($param->email)) 
     ) {     		
         $db = new ConnectionDatabase();
-        $query = "SELECT id, nombre, email, rol, fecha_alta, estado, genero, telcel, telref, urlimg FROM usuarios WHERE email=?";
+        $query = "SELECT id, nombre, email, rol, fecha_alta, estado, genero, telcel, telref, urlimg, idempresa FROM usuarios WHERE email=?";
         try {        
             $resultset = $db->runQuery($query,'s',$bindings=[$param->email]);  	 
         } catch (PDOException $e) {
@@ -272,6 +272,7 @@ function recoverUser($email){
         $iduser = $result[0]["id"];
         $nombre = $result[0]["nombre"];
 		$email  = $result[0]["email"];
+        $empresa = $result[0]["idempresa"];
 		$resultset = []; // por seguridad limpio el array.
 		$resultset["estado"] = "200";
 		
@@ -301,8 +302,13 @@ function recoverUser($email){
                 $db->getConnection()->commit();
               
                 // enviar un mail con el pass provisorio pidiendo que la cambie.
-				// -------------------------------------------------------------
-                $De      =  config::getEmailFrom();
+				// -------------------------------------------------------------                
+                $De =  '';
+                if($empresa == 1){
+                    $De =  config::getEmailFreeTags();
+                }elseif($empresa == 2){
+                    $De =  config::getEmailSafeBags();
+                }
                 $Para    = $email; 
                 $Cc      = "";                
 				$asunto  = 'Confirmación de Cambio de Contraseña';     				

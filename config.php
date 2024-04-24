@@ -36,16 +36,22 @@ class config {
         return self::$config["DATABASE"];
     }
 
-    // Atributos para configurar el servidor de correo
-    public static function getEmailFrom() {
+    // Atributos para configurar el servidor de correo FreeTags
+    public static function getEmailFreeTags() {
         self::cargarConfiguracion();
-        return self::$config["EMAILFROM"];
+        return self::$config["EMAIL_FREETAGS"];
     }
 
-    public static function getEmailSubjectFreetags() {
+    public static function getEmailSubjectFreeTags() {
         self::cargarConfiguracion();
         return self::$config["SUBJECT_FREETAGS"];
     }    
+
+    // Atributos para configurar el servidor de correo SafeBags
+    public static function getEmailSafeBags() {
+        self::cargarConfiguracion();
+        return self::$config["EMAIL_SAFEBAGS"];
+    }
 
     public static function getEmailSubjectSafeBags() {
         self::cargarConfiguracion();
