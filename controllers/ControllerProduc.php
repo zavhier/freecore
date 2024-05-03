@@ -121,6 +121,9 @@ function getProducByUserFromDatabase($param){
         $query = "SELECT * FROM productos WHERE usuario_id=?";
         try {
             $resultset = $db->runQuery($query,'d',$bindings=[$param]); 
+            if (empty($resultset)) {
+                $resultset = [];
+            }
         } catch (PDOException $e) {     
             echo "Error al recuperar un producto por ID de usuario: " . $e->getMessage();
         }             
@@ -509,16 +512,33 @@ function updateProducByQrCodeFromDatabase($producto) {
 
 function removeProducFromDatabase($id){
 
-    $resultset = ["estado" => "200"]; 
+    
 
     try {
         $db = new ConnectionDatabase();
 	
         $db->initTransaction();
-	
-        // Eliminar la razón socialun producto
-        $query = "DELETE FROM `productos` WHERE id=?";
-        $db->delete($query, $id);
+
+        // Verifico si existe el producto que se quiere eliminar.
+        $query = "SELECT * FROM productos WHERE id=?";
+        try {
+            $resultset = $db->runQuery($query,'d',$bindings=[$id]); 
+
+            if (empty($resultset)) {
+                print_r($resultset);
+                $resultset["estado"] = "404";
+                $resultset["mensaje"] = "Error, el producto con id: $id que desea eliminar no existe en la bd.";                
+            }else{
+                // Eliminar la razón socialun producto
+                $query = "DELETE FROM `productos` WHERE id=?";
+                $db->delete($query, $id);
+                $resultset = [];
+                $resultset["estado"] = "200";      
+                $resultset["mensaje"] = "El producto con id: $id ha sido eliminado con éxito.";          
+            } 
+        } catch (PDOException $e) {     
+            echo "Error al recuperar un producto por ID de producto: " . $e->getMessage();
+        }
 
         $db->getConnection()->commit();
         $db->close();
@@ -527,7 +547,6 @@ function removeProducFromDatabase($id){
             $db->getConnection()->rollback();
             $db->close();
         }
-
         $resultset["estado"] = "404";
         $resultset["mensaje"] = "Error al eliminar un producto con referencia $id: " . $e->getMessage();
     }

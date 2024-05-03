@@ -411,8 +411,7 @@ function handleDeleteRequest($request,$token) {
 		if (strpos($request, '/api/produc') !== false) {	
 
 			if (validateAuthorization($token, $request, "produc")) {	
-				removeProducFromDatabase($id);				
-				$response["estado"] = "200";
+				$response = removeProducFromDatabase($id);				
 				return response::json($response,$authorization);	
 			}	  
 		}	
